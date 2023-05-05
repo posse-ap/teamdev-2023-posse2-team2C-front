@@ -51,6 +51,33 @@ const eventData = [
     owner_id: 1,
     created_at: "2022-12-1",
   },
+  {
+    id: 1,
+    image:
+      "https://www.nakool.com/wordpress/wp-content/uploads/2014/06/IMG_9993.jpg",
+    name: "てらしの弾き語り講座",
+    participants: 3,
+    owner_id: 5,
+    created_at: "2022-12-1",
+  },
+  {
+    id: 2,
+    image:
+      "https://www.nakool.com/wordpress/wp-content/uploads/2014/06/IMG_9993.jpg",
+    name: "夏蓮の弾き語り講座",
+    participants: 3,
+    owner_id: 2,
+    created_at: "2022-12-1",
+  },
+  {
+    id: 3,
+    image:
+      "https://www.nakool.com/wordpress/wp-content/uploads/2014/06/IMG_9993.jpg",
+    name: "みゆきの弾き語り講座",
+    participants: 3,
+    owner_id: 1,
+    created_at: "2022-12-1",
+  },
 ];
 
 function App() {
@@ -72,7 +99,7 @@ function App() {
           </Box>
         <SelectBox></SelectBox>
         </Box>
-        <Grid container spacing={10}>
+        <Grid container spacing={5}>
           {eventData.map((eventItem) => (
             <Card event={eventItem} />
           ))}
