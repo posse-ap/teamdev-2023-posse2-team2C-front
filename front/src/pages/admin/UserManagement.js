@@ -1,32 +1,62 @@
 import React, { useState, useEffect } from "react";
-import { List, ListItem, ListItemText, Typography } from "@mui/material";
-import { fetchUsers } from "../../services/userService";
+import { Box, Typography } from "@mui/material";
+import { fetchUsers } from "@/services/userService";
+import ManagementTable from '@/components/admin/ManagementTable';
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchUsers();
+      //   const data = await fetchUsers();
+      //
+      // path名 /users の get
+      const data = [
+        {
+          name: "name",
+          listedItems: 10,
+          coinAmount: 100,
+          pointAmount: 150,
+          is_admin: true,
+        },
+        {
+          name: "name",
+          listedItems: 10,
+          coinAmount: 100,
+          pointAmount: 150,
+          is_admin: false,
+        },
+        {
+          name: "name",
+          listedItems: 10,
+          coinAmount: 100,
+          pointAmount: 150,
+          is_admin: false,
+        },
+      ];
       setUsers(data);
     };
 
     fetchData();
   }, []);
 
+  const headers = [
+    "ユーザー名",
+    "出品アイテム数",
+    "Coin数 (未換金)",
+    "残pt額",
+    "管理者権限",
+    ""
+  ];
+
+
   return (
-    <div>
-      <Typography variant="h4" component="h1" gutterBottom>
-        User Management
+    <Box sx={{ p: 4 }}>
+      <Typography variant="h4" component="h1" gutterBottom sx={{ px: 2 }}>
+        ユーザー一覧
       </Typography>
-      <List>
-        {users.map((user) => (
-          <ListItem key={user.id}>
-            <ListItemText primary={user.name} />
-          </ListItem>
-        ))}
-      </List>
-    </div>
+      <ManagementTable data={users} headers={headers} />
+    </Box>
   );
 };
 
