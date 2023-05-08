@@ -57,18 +57,29 @@ const ManagementTable = ({ data, headers }) => {
                       variant="contained"
                       className={
                         row.is_admin
-                          ? "rounded-md bg-teal-400 font-bold hover:bg-teal-500"
-                          : "rounded-md bg-gray-100 text-teal-400 font-bold hover:bg-gray-200"
+                          ? "bg-teal-400 font-bold hover:bg-teal-500"
+                          : "bg-gray-100 text-teal-400 font-bold hover:bg-gray-200"
                       }
                       onClick={handleOpenRoleModal}
                     >
                       {row.is_admin ? "管理者" : "一般"}
                     </Button>
+                  </TableCell>
+                  <TableCell align="right">
+                    <IconButton
+                      aria-label="delete"
+                      onClick={handleOpenDeleteModal}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
                     <Modal
                       open={deleteModalOpen}
                       onClose={handleCloseDeleteModal}
                       aria-labelledby="modal-modal-title"
                       aria-describedby="modal-modal-description"
+                      BackdropProps={{
+                        sx: { backgroundColor: "rgba(0, 0, 0, 0.3)" },
+                      }}
                     >
                       <Box
                         sx={{
@@ -81,6 +92,10 @@ const ManagementTable = ({ data, headers }) => {
                           border: "2px solid #000",
                           boxShadow: 24,
                           p: 4,
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          borderRadius: 5,
                         }}
                       >
                         <Typography
@@ -90,19 +105,15 @@ const ManagementTable = ({ data, headers }) => {
                         >
                           ユーザーを削除しますか？
                         </Typography>
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        ユーザー名：金子夏蓮
+                        <Typography id="modal-modal-description" sx={{ my: 2 }}>
+                        ユーザー名：{row.name}
                         </Typography>
+                        <Box sx={{display: 'flex', justifyContent: "space-around", width: "100%"}}>
+                          <Button className="bg-gray-100 text-teal-400 font-bold hover:bg-gray-200" onClick={handleCloseDeleteModal}>戻る</Button>
+                          <Button className="bg-teal-400 text-white font-bold hover:bg-teal-500" onClick={handleCloseDeleteModal}>はい</Button>
+                        </Box>
                       </Box>
                     </Modal>
-                  </TableCell>
-                  <TableCell align="right">
-                    <IconButton
-                      aria-label="delete"
-                      onClick={handleOpenDeleteModal}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
                   </TableCell>
                 </>
               ) : (
