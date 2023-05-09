@@ -96,3 +96,4 @@ const UserManagementTable = ({ data, headers }) => {
 };
 
 export default UserManagementTable;
+
