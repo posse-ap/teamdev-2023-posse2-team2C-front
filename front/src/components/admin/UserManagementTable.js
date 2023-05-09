@@ -35,9 +35,9 @@ const UserManagementTable = ({ data, headers }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row, rowIndex) => (
+          {data.map(({ id, is_admin, ...rest }, rowIndex) => (
             <TableRow key={rowIndex}>
-              {Object.values(row)
+              {Object.values(rest)
                 .filter((value) => typeof value !== "boolean")
                 .map((value, cellIndex) => (
                   <TableCell
@@ -51,23 +51,23 @@ const UserManagementTable = ({ data, headers }) => {
                     <Button
                       variant="contained"
                       className={
-                        row.is_admin
+                        is_admin
                           ? "bg-teal-400 font-bold hover:bg-teal-500"
                           : "bg-gray-100 text-teal-400 font-bold hover:bg-gray-200"
                       }
-                      onClick={() => handleOpenRoleModal(row.id)}
+                      onClick={() => handleOpenRoleModal(id)}
                     >
-                      {row.is_admin ? "管理者" : "一般"}
+                      {is_admin ? "管理者" : "一般"}
                     </Button>
                     <Modal
-                      open={roleModalOpen === row.id}
+                      open={roleModalOpen === id}
                       onClose={handleCloseRoleModal}
                       title={
-                        row.is_admin
+                        is_admin
                           ? "管理者権限を取消しますか?"
                           : "管理者権限を付与しますか?"
                       }
-                      description={`ユーザー名：${row.name}`}
+                      description={`ユーザー名：${rest.name}`}
                       cancelButtonText="戻る"
                       confirmButtonText="はい"
                     />
@@ -75,15 +75,15 @@ const UserManagementTable = ({ data, headers }) => {
                   <TableCell align="right">
                     <IconButton
                       aria-label="delete"
-                      onClick={() => handleOpenDeleteModal(row.id)}
+                      onClick={() => handleOpenDeleteModal(id)}
                     >
                       <DeleteIcon />
                     </IconButton>
                     <Modal
-                      open={deleteModalOpen === row.id}
+                      open={deleteModalOpen === id}
                       onClose={handleCloseDeleteModal}
                       title="ユーザーを削除しますか？"
-                      description={`ユーザー名：${row.name}`}
+                      description={`ユーザー名：${rest.name}`}
                       cancelButtonText="戻る"
                       confirmButtonText="はい"
                     />

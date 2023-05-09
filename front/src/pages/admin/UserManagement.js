@@ -14,25 +14,25 @@ const UserManagement = () => {
         {
           id: 1,
           name: "name",
-          listedItems: 10,
-          coinAmount: 100,
-          pointAmount: 150,
+          listed_items: 10,
+          coin_amount: 100,
+          point_amount: 150,
           is_admin: true,
         },
         {
           id: 2,
           name: "name1",
-          listedItems: 10,
-          coinAmount: 100,
-          pointAmount: 150,
+          listed_items: 10,
+          coin_amount: 100,
+          point_amount: 150,
           is_admin: false,
         },
         {
           id: 3,
           name: "name2",
-          listedItems: 10,
-          coinAmount: 100,
-          pointAmount: 150,
+          listed_items: 10,
+          coin_amount: 100,
+          point_amount: 150,
           is_admin: false,
         },
       ];
@@ -48,7 +48,7 @@ const UserManagement = () => {
     "Coin数 (未換金)",
     "残pt額",
     "管理者権限",
-    ""
+    "",
   ];
 
 
