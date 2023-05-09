@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
-import { fetchUsers } from "@/services/userService";
-import ManagementTable from '@/components/admin/ManagementTable';
+import ManagementTable from '@/components/admin/UserManagementTable';
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
