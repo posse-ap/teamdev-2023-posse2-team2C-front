@@ -38,7 +38,6 @@ const UserManagementTable = ({ data, headers }) => {
           {data.map(({ id, is_admin, ...rest }, rowIndex) => (
             <TableRow key={rowIndex}>
               {Object.values(rest)
-                .filter((value) => typeof value !== "boolean")
                 .map((value, cellIndex) => (
                   <TableCell
                     key={cellIndex}
