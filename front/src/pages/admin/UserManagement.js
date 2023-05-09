@@ -13,6 +13,7 @@ const UserManagement = () => {
       // path名 /users の get
       const data = [
         {
+          id: 1,
           name: "name",
           listedItems: 10,
           coinAmount: 100,
@@ -20,14 +21,16 @@ const UserManagement = () => {
           is_admin: true,
         },
         {
-          name: "name",
+          id: 2,
+          name: "name1",
           listedItems: 10,
           coinAmount: 100,
           pointAmount: 150,
           is_admin: false,
         },
         {
-          name: "name",
+          id: 3,
+          name: "name2",
           listedItems: 10,
           coinAmount: 100,
           pointAmount: 150,
