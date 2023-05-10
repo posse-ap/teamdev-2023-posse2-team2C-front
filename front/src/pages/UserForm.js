@@ -3,7 +3,7 @@ import CardForm from "../components/CardForm.js";
 import UserHeader from "../components/UserHeader-simple.js";
 import PropTypes from "prop-types";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { Box, Typography, Container, TextField, Button } from "@mui/material";
+import { Box, Typography, Container, TextField, Button, Link } from "@mui/material";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 
@@ -13,7 +13,10 @@ function UserForm() {
       <UserHeader></UserHeader>
       <Container>
         <Box className="flex items-center">
-            <ArrowBackIosIcon />
+            <Link href="/UserTop">
+              <span><ArrowBackIosIcon /></span>
+            </Link>
+            
             <Typography variant="h4" component="h1">
                 アイテム出品
             </Typography>
@@ -50,8 +53,10 @@ function UserForm() {
           </Typography>
           <TextField label="" variant="filled" className="w-full" />
         </Box>
-        <Box className="flex">
-        <Button variant="contained" className="rounded-md bg-teal-400 px-2 py-3">確認画面へ</Button>
+        <Box className="flex justify-center">
+        <Link href="/">
+        <Button variant="contained" className="rounded-md bg-teal-400 px-2 py-3 my-2 text-lg">確認画面へ</Button>
+        </Link>
         </Box>
       </Container>
     </div>
