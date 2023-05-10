@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import Card from "../components/Card.js";
 import UserTab from "../components/UserTab.js";
 import UserHeader from "../components/UserHeader.js";
@@ -22,38 +22,56 @@ import {
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 
-const eventData = [
-  // status_idで絞り込みだね
-  {
-    id: 1,
-    image:
-      "https://www.nakool.com/wordpress/wp-content/uploads/2014/06/IMG_9993.jpg",
-    name: "てらしの弾き語り講座",
-    participants: 3,
-    owner_id: 5,
-    created_at: "2022-12-1",
-  },
-  {
-    id: 2,
-    image:
-      "https://www.nakool.com/wordpress/wp-content/uploads/2014/06/IMG_9993.jpg",
-    name: "夏蓮の弾き語り講座",
-    participants: 3,
-    owner_id: 2,
-    created_at: "2022-12-1",
-  },
-  {
-    id: 3,
-    image:
-      "https://www.nakool.com/wordpress/wp-content/uploads/2014/06/IMG_9993.jpg",
-    name: "みゆきの弾き語り講座",
-    participants: 3,
-    owner_id: 1,
-    created_at: "2022-12-1",
-  },
-];
+// const eventData = [
+//   // status_idで絞り込みだね
+  // {
+  //   id: 1,
+  //   image:
+  //     "https://www.nakool.com/wordpress/wp-content/uploads/2014/06/IMG_9993.jpg",
+  //   name: "てらしの弾き語り講座",
+  //   participants: 3,
+  //   owner_id: 5,
+  //   owner_name: "金子夏蓮"
+  //   created_at: "2022-12-1",
+  // },
+//   {
+//     id: 2,
+//     image:
+//       "https://www.nakool.com/wordpress/wp-content/uploads/2014/06/IMG_9993.jpg",
+//     name: "夏蓮の弾き語り講座",
+//     participants: 3,
+//     owner_id: 2,
+//     created_at: "2022-12-1",
+//   },
+//   {
+//     id: 3,
+//     image:
+//       "https://www.nakool.com/wordpress/wp-content/uploads/2014/06/IMG_9993.jpg",
+//     name: "みゆきの弾き語り講座",
+//     participants: 3,
+//     owner_id: 1,
+//     created_at: "2022-12-1",
+//   },
+// ];
 
-function UserTop() {
+const UserTop=() => {
+  const [items, setItems] = useState([]);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost/api/items/1');
+        const data = await response.json();
+        setItems(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  console.log(items);
   return (
     <div className="App">
       <UserHeader></UserHeader>
@@ -73,8 +91,8 @@ function UserTop() {
         <SelectBox></SelectBox>
         </Box>
         <Grid container spacing={10}>
-          {eventData.map((eventItem) => (
-            <Card event={eventItem} />
+          {items.map((item) => (
+            <Card event={item} />
           ))}
         </Grid>
       </Container>

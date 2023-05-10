@@ -2,6 +2,7 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import { Typography, Box } from "@mui/material";
 
+
 const Card = ({ event }) => {
   return (
     <Grid item xs={4}>
@@ -26,7 +27,7 @@ const Card = ({ event }) => {
                 component="p"
                 className="text-white font-bold p-1"
               >
-                イベント
+                {event.likes}pt
               </Typography>
             </Box>
           </Box>
@@ -39,7 +40,7 @@ const Card = ({ event }) => {
             paddingX={2}
           >
             <Typography variant="subtitle" component="p">
-              参加者：{event.participants}
+              いいね：{event.likes}件
             </Typography>
             <Typography variant="subtitle" component="p">
               出品者：{event.owner_id}
