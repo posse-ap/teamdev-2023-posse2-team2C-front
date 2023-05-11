@@ -8,7 +8,7 @@ const Card = ({ event }) => {
     <Grid item xs={4}>
       <Paper elevation={3} className="rounded-lg">
         <Box padding={1}>
-          <img src={event.image} alt="アイテムの画像" className="card-img" />
+          <img src={event.image_url} alt="アイテムの画像" className="card-img" />
 
           <Box
             sx={{
@@ -21,15 +21,27 @@ const Card = ({ event }) => {
             <Typography variant="subtitle" component="h2" className="font-bold">
               {event.name}
             </Typography>
-            <Box className="rounded-md bg-teal-400">
-              <Typography
+            {event.is_item ?               
+            <Box className="rounded-md bg-blue-100">
+            <Typography
                 variant="body2"
                 component="p"
-                className="text-white font-bold p-1"
-              >
-                {event.likes}pt
-              </Typography>
+                className="text-teal-400 font-extrabold p-2"
+            >
+              {event.price}pt
+            </Typography>
             </Box>
+            :
+            <Box className="rounded-md bg-teal-400">
+            <Typography
+                variant="body2"
+                component="p"
+                className="text-white font-bold p-2"
+            > 
+            イベント
+            </Typography>
+            </Box>
+            }
           </Box>
           <Box
             sx={{
@@ -40,10 +52,10 @@ const Card = ({ event }) => {
             paddingX={2}
           >
             <Typography variant="subtitle" component="p">
-              いいね：{event.likes}件
+              {event.is_item ? `いいね：${event.likes}人` : `参加者：${event.participants}人`}
             </Typography>
             <Typography variant="subtitle" component="p">
-              出品者：{event.owner_id}
+              {event.owner}
             </Typography>
           </Box>
         </Box>
