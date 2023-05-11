@@ -8,11 +8,9 @@ import {
   TableHead,
   TableRow,
   Paper,
-  IconButton,
   Button,
 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Modal from "@/components/Modal";
+import Link from 'next/link';
 
 const ListingReviewTable = ({ data, headers }) => {
 
@@ -31,7 +29,7 @@ const ListingReviewTable = ({ data, headers }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(({ id, is_admin, ...rest }, rowIndex) => (
+          {data.map(({ id, ...rest }, rowIndex) => (
             <TableRow key={rowIndex}>
               {Object.values(rest)
                 .filter((value) => typeof value !== "boolean")
@@ -44,13 +42,11 @@ const ListingReviewTable = ({ data, headers }) => {
                   </TableCell>
                 ))}
                   <TableCell align="right">
-                    <Button
-                      variant="contained"
-                      className= "bg-teal-400 font-bold hover:bg-teal-500"
-                      onClick={() => handleOpenRoleModal(id)}
-                    >
-                      {"審査"}
-                    </Button>
+                  <Link href={`/admin/ListingReview/${id}`} passHref>
+                  <Button variant="contained" className="bg-teal-400 font-bold hover:bg-teal-500">
+                  {"審査"}
+                  </Button>
+                  </Link>
                   </TableCell>
             </TableRow>
           ))}

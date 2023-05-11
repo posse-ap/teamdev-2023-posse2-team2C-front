@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import ListingReviewTable from '@/components/admin/ListingReviewTable';
 
-const UserManagement = () => {
+const ListingReview = () => {
   const [requests, setRequests] = useState([]);
 
   useEffect(() => {
@@ -54,4 +54,4 @@ const UserManagement = () => {
   );
 };
 
-export default UserManagement;
+export default ListingReview;
