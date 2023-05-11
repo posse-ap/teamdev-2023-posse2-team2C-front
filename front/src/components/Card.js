@@ -1,5 +1,6 @@
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
+import FavoriteIcon from "./LikeButton.js";
 import { Typography, Box } from "@mui/material";
 
 
@@ -49,11 +50,25 @@ const Card = ({ event }) => {
               alignItems: "center",
               justifyContent: "space-between",
             }}
-            paddingX={2}
+            paddingX={1}
           >
-            <Typography variant="subtitle" component="p">
-              {event.is_item ? `いいね：${event.likes}人` : `参加者：${event.participants}人`}
-            </Typography>
+              {event.is_item ? 
+              <Box
+              style={{ padding: 0 }}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}>
+              <FavoriteIcon></FavoriteIcon>
+              <Typography variant="subtitle" component="p">
+              {event.likes}
+              </Typography>
+              </Box>
+              :
+              <Typography variant="subtitle" component="p">
+              参加者：{event.participants}人
+              </Typography>
+              }
             <Typography variant="subtitle" component="p">
               {event.owner}
             </Typography>
