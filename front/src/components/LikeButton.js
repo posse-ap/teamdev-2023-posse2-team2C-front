@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { IconButton, Badge } from "@material-ui/core";
-import { Favorite, FavoriteBorder } from "@material-ui/icons";
+import { IconButton, Badge } from "@mui/material";
+import { Favorite, FavoriteBorder } from "@mui/icons-material";
 
 export default function LikeButton() {
   const [liked, setLiked] = useState(false);
@@ -11,12 +11,10 @@ export default function LikeButton() {
   return (
     <IconButton
       onClick={handleLikeClick}
-      color={liked ? "secondary" : "default"}
+      color={liked ? "error" : "default"}
       style={{ padding: 0 }}
     >
-      <Badge color="error">
-        {liked ? <Favorite /> : <FavoriteBorder />}
-      </Badge>
+      <Badge color="error">{liked ? <Favorite /> : <FavoriteBorder />}</Badge>
     </IconButton>
   );
 }
