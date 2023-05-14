@@ -1,4 +1,3 @@
-import UploadButton from "@/components/UploadButton.js";
 import {
   Typography,
   Box,
@@ -30,11 +29,6 @@ const CardForm = () => {
   return (
     <Paper elevation={3} className="rounded-lg w-8/12">
       <Box padding={1}>
-        <MuiFileInput
-          value={file}
-          onChange={handleChangeFile}
-          variant="outlined"
-        />
         {file && !(file.type === "image/png" || file.type === "image/jpeg") && (
           <Typography
             variant="caption"
@@ -47,14 +41,11 @@ const CardForm = () => {
         )}
         {file && (file.type === "image/png" || file.type === "image/jpeg") && (
           <React.Fragment>
-            <Typography variant="caption" component="div" mt={1} gutterBottom>
-              送信画像プレビュー
-            </Typography>
             <img
               id="preview"
               src={preview}
               alt="preview"
-              className="previewimg w-32"
+              className="previewimg card-img"
             />
           </React.Fragment>
         )}
@@ -71,13 +62,13 @@ const CardForm = () => {
             component="h2"
             className="font-bold"
           ></Typography>
-          <Box className="rounded-md bg-teal-400">
+          <Box className="rounded-md bg-blue-100">
             <Typography
               variant="body2"
               component="p"
-              className="text-white font-bold p-1"
+              className="text-teal-400 font-bold p-1"
             >
-              イベント
+              ？？？pt
             </Typography>
           </Box>
         </Box>
@@ -97,6 +88,11 @@ const CardForm = () => {
           </Typography>
         </Box>
       </Box>
+        <MuiFileInput
+          value={file}
+          onChange={handleChangeFile}
+          variant="outlined"
+        />
     </Paper>
   );
 };
