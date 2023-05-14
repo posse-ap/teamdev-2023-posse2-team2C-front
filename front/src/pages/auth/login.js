@@ -66,8 +66,10 @@ export default function SignIn() {
           </Typography>
           <Box
             component="form"
-            onSubmit={handleSubmit}
+            // onSubmit={handleSubmit}
             noValidate
+            action="http://localhost/api/login"
+            method="post"
             sx={{ mt: 1 }}
           >
             <TextField
@@ -75,7 +77,7 @@ export default function SignIn() {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="メール"
               name="email"
               autoComplete="email"
               autoFocus
@@ -85,7 +87,7 @@ export default function SignIn() {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="パスワード"
               type="password"
               id="password"
               autoComplete="current-password"
@@ -109,7 +111,7 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/auth/register" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
