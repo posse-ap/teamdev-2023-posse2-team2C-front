@@ -1,34 +1,21 @@
 import React, { useState, useEffect } from "react";
-import Card from "../components/Card.js";
-import UserTab from "../components/UserTab.js";
-import UserHeader from "../components/UserHeader.js";
-import FavoriteIcon from "../components/LikeButton.js";
-import PropTypes from "prop-types";
-import {
-  Box,
-  Button,
-  Typography,
-  Paper,
-  Switch,
-  Container,
-  Grid,
-  dividerClasses,
-  Checkbox,
-  Select,
-  FormControl,
-  MenuItem,
-  InputLabel,
-} from "@mui/material";
+import UserTab from "../../components/UserTab.js";
+import UserHeader from "../../components/UserHeader.js";
+import FavoriteIcon from "../../components/LikeButton.js";
+import { useRouter } from "next/router";
+import { Box, Button, Typography, Container } from "@mui/material";
 
-const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
-const UserTop = () => {
+const ItemDetail = () => {
   const [item, setItems] = useState([]);
+  const router = useRouter();
+  console.log(router.query.item_num);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost/api/item/1");
+        const response = await fetch(
+          `http://localhost/api/item/${router.query.item_num}`
+        );
         const data = await response.json();
         setItems(data);
       } catch (error) {
@@ -41,7 +28,6 @@ const UserTop = () => {
 
   console.log(item);
   console.log(item.history);
-
 
   return (
     <div className="App">
@@ -128,11 +114,14 @@ const UserTop = () => {
           </Box>
         </Box>
       </Container>
-      <Box sx={{ borderTop: "1px solid gray", marginTop: 4 }}>
-
-      </Box>
+      <Box sx={{ borderTop: "1px solid gray", marginTop: 4 }}></Box>
     </div>
   );
 };
 
-export default UserTop;
+ItemDetail.getInitialProps = async ({ query }) => {
+  const { item_num } = query
+  return { item_num }
+}
+
+export default ItemDetail;
