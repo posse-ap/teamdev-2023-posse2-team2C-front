@@ -1,4 +1,6 @@
-import * as React from "react";
+// import * as React from "react";
+import React, { useState, useEffect } from "react";
+// import axios from 'axios';
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,6 +15,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import SimpleUserHeader from "@/components/UserHeader-simple";
+
+import { api as csrfApi } from "./csrfCookie";
 
 function Copyright(props) {
   return (
@@ -35,14 +39,41 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const [csrfToken, setCsrfToken] = useState('');
+
+  useEffect(() => {
+    async function fetchCsrfToken() {
+      const response = await fetch('http://localhost:80/api/csrf-token');
+      const token = await response.text();
+      setCsrfToken(token);
+    }
+
+    fetchCsrfToken();
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    const formData = new FormData(e.target);
+    // formData.append('_token', csrfToken);
+  
+    try {
+      const response = await fetch('http://localhost:80/api/user/login', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'X-CSRF-TOKEN' : csrfToken
+        },
+        // credentials: 'include',
+      });
+  
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
+  
 
   return (
     <ThemeProvider theme={theme}>
@@ -66,12 +97,13 @@ export default function SignIn() {
           </Typography>
           <Box
             component="form"
-            // onSubmit={handleSubmit}
-            noValidate
-            action="http://localhost/api/login"
+            onSubmit={handleSubmit}
+            // noValidate
+            action="http://localhost:80/user/login"
             method="post"
             sx={{ mt: 1 }}
           >
+            {/* <input type="hidden" name="_token" value={csrfToken} /> */}
             <TextField
               margin="normal"
               required

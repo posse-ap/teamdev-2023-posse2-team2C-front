@@ -66,9 +66,11 @@ export default function SignUp() {
           </Typography>
           <Box
             component="form"
-            noValidate
-            onSubmit={handleSubmit}
+            // noValidate
+            // onSubmit={handleSubmit}
             sx={{ mt: 3 }}
+            action="http://localhost/api/register"
+            method="post"
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>
