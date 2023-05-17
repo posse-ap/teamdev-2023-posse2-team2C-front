@@ -3,7 +3,8 @@ import UserTab from "../../components/UserTab.js";
 import UserHeader from "../../components/UserHeader.js";
 import FavoriteIcon from "../../components/LikeButton.js";
 import { useRouter } from "next/router";
-import { Box, Button, Typography, Container } from "@mui/material";
+import { Box, Button, Typography, Container, Link } from "@mui/material";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 const ItemDetail = () => {
   const [item, setItems] = useState([]);
@@ -26,8 +27,8 @@ const ItemDetail = () => {
     fetchData();
   }, []);
 
-  console.log(item);
-  console.log(item.history);
+  const histories = item.history;
+  const payment_url = `/ItemPayment/${router.query.item_num}`;
 
   return (
     <div className="App">
@@ -39,6 +40,11 @@ const ItemDetail = () => {
           justifyContent: "space-between",
         }}
       >
+        <Link href="/UserTop">
+          <span>
+            <ArrowBackIosIcon />
+          </span>
+        </Link>
         <Box className="w-1/2 pr-20">
           <Box className="border border-gray-400 ml-10 mb-5 p-5">
             <img src={item.image_url} alt="アイテムの画像" />
@@ -88,13 +94,12 @@ const ItemDetail = () => {
               {item.likes} likes
             </Typography>
           </Box>
-          <Button
-            variant="contained"
+          <Link
+            href={payment_url}
             className="rounded-md bg-teal-400 px-2 py-3 mx-20 my-5 w-2/3 text-3xl"
-            // onClick={openModal}
           >
-            借りる！
-          </Button>
+            <a>借りる！</a>
+          </Link>
           <Typography variant="h6" component="p">
             商品の説明
           </Typography>
@@ -114,14 +119,24 @@ const ItemDetail = () => {
           </Box>
         </Box>
       </Container>
-      <Box sx={{ borderTop: "1px solid gray", marginTop: 4 }}></Box>
+      <Box sx={{ borderTop: "1px solid gray", marginTop: 4 }}>
+        {console.log(histories)}
+        {histories?.map((history) => (
+          <div key={history.name}>
+            <p>{history.name}</p>
+            <p>
+              {history.start} - {history.end}
+            </p>
+          </div>
+        ))}
+      </Box>
     </div>
   );
 };
 
 ItemDetail.getInitialProps = async ({ query }) => {
-  const { item_num } = query
-  return { item_num }
-}
+  const { item_num } = query;
+  return { item_num };
+};
 
 export default ItemDetail;

@@ -81,7 +81,7 @@ const ItemPayment = () => {
         <Box className="flex justify-center mt-10">
           <Button
             variant="contained"
-            className="rounded-md bg-teal-400 px-2 py-3 w-1/2 text-3xl"
+            className="rounded-md bg-teal-400 hover:bg-teal-500 px-2 py-3 w-1/2 text-3xl"
             // onClick={openModal}
           >
             確定
