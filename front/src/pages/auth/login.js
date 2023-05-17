@@ -67,8 +67,8 @@ export default function SignIn() {
         // credentials: 'include',
       });
   
-      const data = await response.json();
-      console.log(data);
+      // const data = await response.json();
+      // console.log(data);
     } catch (error) {
       console.error(error);
     }
@@ -97,9 +97,9 @@ export default function SignIn() {
           </Typography>
           <Box
             component="form"
-            onSubmit={handleSubmit}
+            // onSubmit={handleSubmit}
             // noValidate
-            action="http://localhost:80/user/login"
+            action="http://localhost:80/api/user/login"
             method="post"
             sx={{ mt: 1 }}
           >
