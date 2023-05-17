@@ -13,7 +13,9 @@ const ItemPayment = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost/api/item/${router.query.item_num}`);
+        const response = await fetch(
+          `http://localhost/api/items/${router.query.item_num}`
+        );
         const data = await response.json();
         setItems(data);
       } catch (error) {
@@ -22,6 +24,29 @@ const ItemPayment = () => {
     };
 
     fetchData();
+
+    const storeRentalData = async (item_id) => {
+      try {
+        const response = await fetch(`http://localhost/api/items/${item_id}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        return [];
+      }
+    };
+    /* 以下一旦メモ
+    const handleClickDeleteButton = async () => {
+      await UserService.storeRentalData(selectedUser);
+      const data = await UserService.fetchUsers(); // 変更後にユーザー一覧を更新
+      setUsers(data);
+    };
+    */
   }, []);
 
   const { itemId } = router.query;
@@ -90,12 +115,11 @@ const ItemPayment = () => {
       </Container>
     </div>
   );
-
 };
 
 ItemPayment.getInitialProps = async ({ query }) => {
-  const { itemId } = query
-  return { itemId }
-}
+  const { itemId } = query;
+  return { itemId };
+};
 
 export default ItemPayment;

@@ -15,7 +15,7 @@ const ItemDetail = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost/api/item/${router.query.item_num}`
+          `http://localhost/api/items/${router.query.item_num}`
         );
         const data = await response.json();
         setItems(data);
