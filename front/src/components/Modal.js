@@ -4,6 +4,7 @@ import { Box, Typography, Button, Modal as MuiModal } from "@mui/material";
 const Modal = ({
   open,
   onClose,
+  onConfirm,
   title,
   description,
   cancelButtonText,
@@ -36,7 +37,7 @@ const Modal = ({
           <Button className="bg-gray-100 text-teal-400 font-bold hover:bg-gray-200" onClick={onClose}>
             {cancelButtonText}
           </Button>
-          <Button className="bg-teal-400 text-white font-bold hover:bg-teal-500" onClick={onClose}>
+          <Button className="bg-teal-400 text-white font-bold hover:bg-teal-500" onClick={onConfirm}>
             {confirmButtonText}
           </Button>
         </Box>
