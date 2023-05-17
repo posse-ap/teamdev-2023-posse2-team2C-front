@@ -94,12 +94,12 @@ const ItemDetail = () => {
               {item.likes} likes
             </Typography>
           </Box>
-          <Link
+          <Button
             href={payment_url}
-            className="rounded-md bg-teal-400 px-2 py-3 mx-20 my-5 w-2/3 text-3xl"
+            className="rounded-md bg-teal-400 hover:bg-teal-500 px-2 py-3 mx-20 my-5 w-2/3 text-3xl text-white"
           >
-            <a>借りる！</a>
-          </Link>
+            借りる！
+          </Button>
           <Typography variant="h6" component="p">
             商品の説明
           </Typography>
