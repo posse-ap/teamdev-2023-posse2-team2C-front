@@ -18,10 +18,6 @@ import SimpleUserHeader from "@/components/UserHeader-simple";
 import axios from "axios";
 import { ChangeEvent, useState, useEffect } from "react";
 
-// type LoginParams = {
-//   email: string;
-//   password: string;
-// };
 
 function Copyright(props) {
   return (
@@ -105,7 +101,7 @@ export default function Login() {
       component="form"
       sx={{ mt: 1 }}
     >
-      {/* <input type="hidden" name="_token" value={csrfToken} /> */}
+
       <TextField
         margin="normal"
         required
