@@ -61,7 +61,7 @@ const UserManagementTable = ({ data, headers, handleClickDeleteButton, handleCli
                     <Modal
                       open={roleModalOpen === id}
                       onClose={handleCloseRoleModal}
-                      onConfirm={() => handleClickRoleButton(is_admin)}
+                      onConfirm={() => handleClickRoleButton(id, is_admin)}
                       title={
                         is_admin
                           ? "管理者権限を取消しますか?"
@@ -82,7 +82,7 @@ const UserManagementTable = ({ data, headers, handleClickDeleteButton, handleCli
                     <Modal
                       open={deleteModalOpen === id}
                       onClose={handleCloseDeleteModal}
-                      onConfirm={handleClickDeleteButton}
+                      onConfirm={() => handleClickDeleteButton(id)}
                       title="ユーザーを削除しますか？"
                       description={`ユーザー名：${rest.name}`}
                       cancelButtonText="戻る"

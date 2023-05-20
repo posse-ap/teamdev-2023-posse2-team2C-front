@@ -16,14 +16,14 @@ const UserManagement = () => {
     fetchData();
   }, []);
 
-  const handleClickDeleteButton = async () => {
-    await UserService.deleteUser(selectedUser);
+  const handleClickDeleteButton = async (id) => {
+    await UserService.deleteUser(id);
     const data = await UserService.fetchUsers(); // 変更後にユーザー一覧を更新
     setUsers(data);
   };
 
-  const handleClickRoleButton = async () => {
-    await UserService.updateUserRole(selectedUser, is_admin);
+  const handleClickRoleButton = async (id, is_admin) => {
+    await UserService.updateUserRole(id, is_admin);
     const data = await UserService.fetchUsers();
     setUsers(data);
   };
