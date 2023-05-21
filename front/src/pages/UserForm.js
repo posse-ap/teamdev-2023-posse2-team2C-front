@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import CardForm from "../components/CardForm.js";
 import Modal from "../components/Modal.js";
 import UserHeader from "../components/UserHeader-simple.js";
@@ -72,20 +72,20 @@ const UserForm = () => {
           <TextField label="" variant="filled" className="w-full" />
         </Box>
         <Box className="flex justify-center">
-            <Button
-              variant="contained"
-              className="rounded-md bg-teal-400 px-2 py-3 my-2 text-lg"
-              onClick={openModal}
-            >
-              確認画面へ
-            </Button>
-            <Modal
-              open={isModalOpen}
-              onClose={closeModal}
-              title={"出品しますか？"}
-              cancelButtonText="入力に戻る"
-              confirmButtonText="はい"
-            />
+          <Button
+            variant="contained"
+            className="rounded-md bg-teal-400 px-2 py-3 my-2 text-lg"
+            onClick={openModal}
+          >
+            確認画面へ
+          </Button>
+          <Modal
+            open={isModalOpen}
+            onClose={closeModal}
+            title={"出品しますか？"}
+            cancelButtonText="入力に戻る"
+            confirmButtonText="はい"
+          />
         </Box>
       </Container>
     </div>
