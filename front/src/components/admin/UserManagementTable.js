@@ -11,7 +11,7 @@ import {
   Button,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Modal from "@/components/Modal";
+import Modal from "../Modal";
 
 const UserManagementTable = ({ data, headers, handleClickDeleteButton, handleClickRoleButton }) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(-1);

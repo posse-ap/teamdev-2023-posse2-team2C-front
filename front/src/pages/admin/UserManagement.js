@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
-import ManagementTable from "@/components/admin/UserManagementTable";
-import { UserService } from "@/services/userService";
+import ManagementTable from "../../components/admin/UserManagementTable";
+import { UserService } from "../../services/userService";
+import axios from "axios";
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
@@ -17,13 +18,25 @@ const UserManagement = () => {
   }, []);
 
   const handleClickDeleteButton = async (id) => {
-    await UserService.deleteUser(id);
+    await axios 
+      .delete(`http://localhost:80/api/users/${id}`, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response.data);
+      });
     const data = await UserService.fetchUsers(); // 変更後にユーザー一覧を更新
     setUsers(data);
   };
 
-  const handleClickRoleButton = async (id, is_admin) => {
-    await UserService.updateUserRole(id, is_admin);
+  const handleClickRoleButton = async (user_id, is_admin) => {
+    await axios
+      .put(`http://localhost/api/users/role/${user_id}`, {'user_id': user_id, 'is_admin': is_admin}, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response.data);
+      });
     const data = await UserService.fetchUsers();
     setUsers(data);
   };

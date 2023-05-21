@@ -1,7 +1,9 @@
 const UserService = {
   fetchUsers: async function () {
     try {
-      const response = await fetch("http://localhost/api/users");
+      const response = await fetch("http://localhost/api/users", {
+        credentials: "include", // これがないと、フェッチはクッキーを含まないらしい → middleware auth:sanctum でrejectされちゃう
+      });
       const data = await response.json();
       return data;
     } catch (error) {
@@ -14,6 +16,7 @@ const UserService = {
     try {
       const response = await fetch(`http://localhost/api/users/${user_id}`, {
         method: "DELETE",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -33,6 +36,7 @@ const UserService = {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({
           is_admin: is_admin,
         }),
