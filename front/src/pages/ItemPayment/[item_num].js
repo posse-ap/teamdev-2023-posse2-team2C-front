@@ -3,6 +3,7 @@ import SimpleHeader from "../../components/UserHeader-simple.js";
 import { useRouter } from "next/router";
 
 import { Box, Button, Typography, Container } from "@mui/material";
+import axios from "axios";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -14,40 +15,39 @@ const ItemPayment = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost/api/items/${router.query.item_num}`
+          `http://localhost/api/items/${router.query.item_num}`,{
+            credentials: "include", // これがないと、フェッチはクッキーを含まないらしい → middleware auth:sanctum でrejectされちゃう
+          }
         );
         const data = await response.json();
         setItems(data);
+        console.log(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
+  }, []);
 
-    const storeRentalData = async (item_id) => {
-      try {
-        const response = await fetch(`http://localhost/api/items/${item_id}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await response.json();
-        return data;
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        return [];
-      }
-    };
-    /* 以下一旦メモ
+  const storeRentalData = async (id) => {
+    await axios 
+      .post(`http://localhost/api/items/1`, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response.data);
+      });
+      const data = await response.json();
+      return data;
+  };
+  /* 以下一旦メモ
     const handleClickDeleteButton = async () => {
       await UserService.storeRentalData(selectedUser);
       const data = await UserService.fetchUsers(); // 変更後にユーザー一覧を更新
       setUsers(data);
     };
     */
-  }, []);
 
   const { itemId } = router.query;
 
@@ -107,7 +107,7 @@ const ItemPayment = () => {
           <Button
             variant="contained"
             className="rounded-md bg-teal-400 hover:bg-teal-500 px-2 py-3 w-1/2 text-3xl"
-            // onClick={openModal}
+            onClick={storeRentalData}
           >
             確定
           </Button>
