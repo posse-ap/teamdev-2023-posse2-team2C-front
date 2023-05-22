@@ -32,22 +32,15 @@ const ItemPayment = () => {
 
   const storeRentalData = async (id) => {
     await axios 
-      .post(`http://localhost/api/items/1`, {
+      .get(`http://localhost/api/items/payment/${router.query.item_num}`, {
         withCredentials: true,
       })
       .then((response) => {
         console.log(response.data);
       });
-      const data = await response.json();
-      return data;
+      // const data = await response.json();
+      // return data;
   };
-  /* 以下一旦メモ
-    const handleClickDeleteButton = async () => {
-      await UserService.storeRentalData(selectedUser);
-      const data = await UserService.fetchUsers(); // 変更後にユーザー一覧を更新
-      setUsers(data);
-    };
-    */
 
   const { itemId } = router.query;
 
@@ -83,7 +76,7 @@ const ItemPayment = () => {
               所有pt：
             </Typography>
             <Typography variant="h5" component="p">
-              {item.price}pt
+            {item.user_point}pt
             </Typography>
           </Box>
           <Box className="w-full flex pl-24 pr-10 justify-between">
@@ -91,7 +84,7 @@ const ItemPayment = () => {
               商品pt：
             </Typography>
             <Typography variant="h5" component="p">
-              {item.price}pt
+            {item.price}pt
             </Typography>
           </Box>
           <Box className="border-t border-gray-400 pr-10 w-full flex justify-between">
@@ -99,7 +92,7 @@ const ItemPayment = () => {
               確定後の所有pt：
             </Typography>
             <Typography variant="h5" component="p">
-              {item.price}pt
+              {item.user_point - item.price}pt
             </Typography>
           </Box>
         </Box>
