@@ -1,3 +1,5 @@
+const path = require('path');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   modules: ["@nuxtjs/axios", "@nuxtjs/auth-next"],
@@ -25,6 +27,10 @@ const nextConfig = {
   axios: {
     baseURL: "http://localhost:80",
     credentials: true,
+  },
+  webpack: config => {
+    config.resolve.alias['@'] = path.resolve(__dirname, 'src');
+    return config;
   },
 };
 
