@@ -17,26 +17,14 @@ const UserManagement = () => {
     fetchData();
   }, []);
 
-  const handleClickDeleteButton = async (id) => {
-    await axios 
-      .delete(`http://localhost:80/api/users/${id}`, {
-        withCredentials: true,
-      })
-      .then((response) => {
-        console.log(response.data);
-      });
+  const handleClickDeleteButton = async (user_id) => {
+    await UserService.deleteUser(user_id);
     const data = await UserService.fetchUsers(); // 変更後にユーザー一覧を更新
     setUsers(data);
   };
 
   const handleClickRoleButton = async (user_id, is_admin) => {
-    await axios
-      .put(`http://localhost/api/users/role/${user_id}`, {'user_id': user_id, 'is_admin': is_admin}, {
-        withCredentials: true,
-      })
-      .then((response) => {
-        console.log(response.data);
-      });
+    await UserService.updateUserRole(user_id, is_admin);
     const data = await UserService.fetchUsers();
     setUsers(data);
   };
