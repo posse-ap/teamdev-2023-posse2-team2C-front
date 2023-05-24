@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import CardForm from "../components/CardForm.js";
 import Modal from "../components/Modal.js";
 import UserHeader from "../components/UserHeader-simple.js";
@@ -16,6 +17,23 @@ const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const UserForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [file, setFile] = useState();
+  const [itemName, setItemName] = useState("");
+  const [detail, setDetail] = useState("");
+  const [message, setMessage] = useState("");
+
+  const changeFile = (file) => {
+    setFile(file);
+  };
+  const changeItemName = (e) => {
+    setItemName(e.target.value);
+  };
+  const changeDetail = (e) => {
+    setDetail(e.target.value);
+  };
+  const changeMessage = (e) => {
+    setMessage(e.target.value);
+  };
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -24,10 +42,27 @@ const UserForm = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  const handlePost = async () => {
+    const postParams = {
+      image: file,
+      itemName: itemName,
+      detail: detail,
+      message: message,
+    };
+    await axios
+      .post("http://localhost:80/api/createItem", postParams, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response.data);
+      });
+  };
+
   return (
     <div className="App">
       <UserHeader></UserHeader>
-      <Container>
+      <Container enctype="multipart/form-data">
         <Box className="flex items-center">
           <Link href="/UserTop">
             <span>
@@ -44,13 +79,19 @@ const UserForm = () => {
             <Typography variant="h6" component="h2" className="my-2">
               出品アイテムのプレビュー
             </Typography>
-            <CardForm />
+            <CardForm changeFile={changeFile} file={file} />
           </Box>
           <Box className="w-6/12">
             <Typography variant="h6" component="h2" className="my-2">
               アイテム名
             </Typography>
-            <TextField label="item name" variant="filled" className="w-full" />
+            <TextField
+              label="item name"
+              variant="filled"
+              className="w-full"
+              name="itemName"
+              onChange={changeItemName}
+            />
             <Box>
               <Typography variant="h6" component="h2" className="my-2">
                 商品の説明
@@ -61,6 +102,8 @@ const UserForm = () => {
                 rows={4}
                 variant="filled"
                 className="w-full"
+                name="detail"
+                onChange={changeDetail}
               />
             </Box>
           </Box>
@@ -69,7 +112,13 @@ const UserForm = () => {
           <Typography variant="h6" component="h2">
             管理者に伝えたいこと（任意）
           </Typography>
-          <TextField label="" variant="filled" className="w-full" />
+          <TextField
+            label=""
+            variant="filled"
+            className="w-full"
+            name="message"
+            onChange={changeMessage}
+          />
         </Box>
         <Box className="flex justify-center">
           <Button
@@ -82,6 +131,7 @@ const UserForm = () => {
           <Modal
             open={isModalOpen}
             onClose={closeModal}
+            onConfirm={handlePost}
             title={"出品しますか？"}
             cancelButtonText="入力に戻る"
             confirmButtonText="はい"
