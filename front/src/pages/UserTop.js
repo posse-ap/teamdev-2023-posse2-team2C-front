@@ -34,10 +34,7 @@ const UserTop = () => {
         })
         .then((response) => {
           setItems(response.data);
-        }).catch(function(error) {
-          window.location.href = "http://localhost:3000/auth/login"
-        }
-        );
+        });
     };
 
     fetchData();
