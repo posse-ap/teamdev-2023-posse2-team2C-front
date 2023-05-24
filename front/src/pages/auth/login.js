@@ -18,7 +18,6 @@ import SimpleUserHeader from "@/components/UserHeader-simple";
 import axios from "axios";
 import { ChangeEvent, useState, useEffect } from "react";
 
-
 function Copyright(props) {
   return (
     <Typography
@@ -63,7 +62,11 @@ export default function Login() {
             withCredentials: true,
           })
           .then((response) => {
-            console.log(response.data);
+            if (response.data["logged in"]) {
+              window.location.href = "http://localhost:3000/UserTop";
+            } else {
+              alert(response.data["message"]);
+            }
           });
       });
   };
@@ -77,89 +80,93 @@ export default function Login() {
       });
   };
 
-  return (
-<ThemeProvider theme={theme}>
-<SimpleUserHeader></SimpleUserHeader>
-<Container component="main" maxWidth="xs">
-  <CssBaseline />
-  <Box
-    sx={{
-      marginTop: 8,
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-    }}
-  >
-    <img
-      src="https://cdn.discordapp.com/attachments/1088742577391546449/1102788981638299648/280f7251fa027771.png"
-      className="logo"
-    />
-    <Typography component="h1" variant="h5">
-      ログイン
-    </Typography>
-    <Box
-      component="form"
-      sx={{ mt: 1 }}
-    >
+  const logoutClick = () => {
+    axios
+      .get("http://localhost:80/api/logout", { withCredentials: true })
+      .then((response) => {
+        console.log(response.data);
+      });
+  };
 
-      <TextField
-        margin="normal"
-        required
-        fullWidth
-        id="email"
-        label="メール"
-        name="email"
-        autoComplete="email"
-        autoFocus
-        onChange={changeEmail}
-      />
-      <TextField
-        margin="normal"
-        required
-        fullWidth
-        name="password"
-        label="パスワード"
-        type="password"
-        id="password"
-        autoComplete="current-password"
-        onChange={changePassword}
-      />
-      <FormControlLabel
-        control={<Checkbox value="remember" color="primary" />}
-        label="Remember me"
-      />
-      <Button
-        fullWidth
-        variant="contained"
-        sx={{ mt: 3, mb: 2 }}
-        onClick={handleClick}
-      >
-        Sign In
-      </Button>
-      <Button
-        fullWidth
-        variant="contained"
-        sx={{ mt: 3, mb: 2 }}
-        onClick={handleUserClick}
-      >
-        who am I
-      </Button>
-      <Grid container>
-        <Grid item xs>
-          <Link href="#" variant="body2">
-            Forgot password?
-          </Link>
-        </Grid>
-        <Grid item>
-          <Link href="/auth/register" variant="body2">
-            {"Don't have an account? Sign Up"}
-          </Link>
-        </Grid>
-      </Grid>
-    </Box>
-  </Box>
-  <Copyright sx={{ mt: 8, mb: 4 }} />
-</Container>
-</ThemeProvider>
+  return (
+    <ThemeProvider theme={theme}>
+      <SimpleUserHeader></SimpleUserHeader>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <img
+            src="https://cdn.discordapp.com/attachments/1088742577391546449/1102788981638299648/280f7251fa027771.png"
+            className="logo"
+          />
+          <Typography component="h1" variant="h5">
+            ログイン
+          </Typography>
+          <Box component="form" sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="メール"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              onChange={changeEmail}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="パスワード"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={changePassword}
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={handleClick}
+            >
+              Sign In
+            </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={logoutClick}
+            >
+              logout
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="/auth/register" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+        <Copyright sx={{ mt: 8, mb: 4 }} />
+      </Container>
+    </ThemeProvider>
   );
 }
