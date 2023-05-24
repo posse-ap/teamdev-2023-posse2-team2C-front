@@ -5,16 +5,21 @@ import {
   List,
   ListItem,
   Divider,
-  ListItemText,
   ListItemAvatar,
   Avatar,
   Grid,
   Button,
 } from "@mui/material";
 import { UserService } from "../services/userService";
+import UserHeader from "../components/UserHeader.js";
+import { useSpring, animated } from "@react-spring/web";
 
 const UserManagement = () => {
-  const [userInfo, setUserInfo] = useState([]);
+  const [userInfo, setUserInfo] = useState();
+  const [detail, setDetail] = useState([]);
+  const [detailTitle, setDetailTitle] = useState();
+  const [detailDateName, setDetailDateName] = useState();
+  const [detailOpen, setDetailOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,174 +30,339 @@ const UserManagement = () => {
     fetchData();
   }, []);
 
+  const handleOpenThisMonthPointDrawer = () => {
+    const fetchData = async () => {
+      const data = await UserService.fetchThisMonthPointDetail();
+      setDetail(data);
+    };
+    fetchData();
+    setDetailOpen('ThisMonthPoint');
+    setDetailTitle('今月のpt利用状況');
+    setDetailDateName('引落日');
+  };
+
+  const handleOpenHistoryPointDrawer = () => {
+    const fetchData = async () => {
+      const data = await UserService.fetchHistoryPointDetail();
+      setDetail(data);
+    };
+    fetchData();
+    setDetailOpen('HistoryPoint');
+    setDetailTitle('先月までのpt利用履歴');
+    setDetailDateName('引落日');
+  };
+
+  const handleOpenHistoryConvertCoinDrawer = () => {
+    const fetchData = async () => {
+      const data = await UserService.fetchHistoryConvertCoinDetail();
+      setDetail(data);
+    };
+    fetchData();
+    setDetailOpen('HistoryConvertCoin');
+    setDetailTitle('換金状況');
+    setDetailDateName('申請日');
+  };
+
+  const handleOpenDepositCoinDrawer = () => {
+    const fetchData = async () => {
+      const data = await UserService.fetchDepositCoinDetail();
+      setDetail(data);
+    };
+    fetchData();
+    setDetailOpen('DepositCoin');
+    setDetailTitle('coin取得履歴');
+    setDetailDateName('付与日');
+  };
+
+  const handleOpenEstimateCoinDrawer = () => {
+    const fetchData = async () => {
+      const data = await UserService.fetchEstimateCoinDetail();
+      setDetail(data);
+    };
+    fetchData();
+    setDetailOpen('EstimateCoin');
+    setDetailTitle('取得見込みcoin');
+    setDetailDateName('開始日');
+  };
+
+  const handleOpenConvertCoinDrawer = () => {
+    // todo
+
+  };
+
+
+
+
   console.log(userInfo);
 
+  const slideStyles = useSpring({
+    from: { transform: "translateX(100%)" },
+    to: { transform: "translateX(0%)" },
+    reverse: !detailOpen,
+  });
+
+  const Account = ({ title, userInfo }) => (
+    <ListItem sx={{ display: "flex", flexDirection: "column" }}>
+      <Box className="rounded-md bg-orange-500 mr-auto mb-2">
+        <Typography
+          variant="body2"
+          component="p"
+          className="text-white font-extrabold p-2"
+        >
+          {title}
+        </Typography>
+      </Box>
+      <Grid container alignItems="center" sx={{ height: "100%" }}>
+        <Grid item xs={2}>
+          <ListItemAvatar>
+            <Avatar alt="P" src="/static/images/avatar/1.jpg" />
+          </ListItemAvatar>
+        </Grid>
+        <Grid item xs={10}>
+          <Typography variant="body2" color="text.primary">
+            ユーザー名: {userInfo?.account?.name}
+          </Typography>
+        </Grid>
+      </Grid>
+    </ListItem>
+  );
+
+  const PointDetail = ({detail}) => {
+    if(detail.length !== 0){
+      return (
+    <Box sx={{ maxWidth: 500 }}>
+    <Typography>{detailTitle}</Typography>
+
+    {
+      detail?.map((item) => (
+        <>
+    <ListItem style={{ display: "flex", flexDirection: "column" }}>
+    <Grid
+        container
+        alignItems="center"
+        style={{ height: "100%", margin: 4 }}
+      >
+    <Grid item xs={6}>
+      <Grid container alignItems="center" spacing={1}>
+        <Grid item>
+          <Box className= {item?.type?.id === 1 ? "rounded-md bg-teal-400 mr-auto mb-2":"rounded-md bg-orange-500 mr-auto mb-2" }>
+            <Typography
+              variant="body2"
+              component="p"
+              className="text-white font-extrabold p-2"
+            >
+              {item?.type?.name}
+            </Typography>
+          </Box>
+        </Grid>
+        <Grid item>
+          <Typography>{detailDateName}：{item?.date}</Typography>
+        </Grid>
+      </Grid>
+          <Typography variant="body2" color="text.primary">
+            {detailOpen === "HistoryConvertCoin" ? "注文ID" : "注文名"}：{item?.name}
+          </Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Typography color="text.primary" fontSize="20px">
+            {userInfo?.point?.this_month}pt
+          </Typography>
+        </Grid>
+        <Grid item xs={2}>
+        {detailOpen === "HistoryConvertCoin" ? null : (
+          <Button
+          className="bg-gray-100 text-teal-400 font-bold hover:bg-gray-200"
+          >
+            詳細
+          </Button>
+            )}
+        </Grid>
+    </Grid>
+    </ListItem>
+    <Divider/>
+    </>))}
+</Box>
+  )} else { 
+  return ( 
+  <Box>
+  <Typography>{detailTitle}</Typography>
+    データがありません。
+  </Box>
+)};
+  }
+
   return (
-    <Box sx={{ p: 4 }}>
-      {/* <Detail> */}
-      {/* <PointHistory/> */}
-      {/* </Detail> */}
-      <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-      {/* <Acount /> */}
-        <ListItem style={{ display: "flex", flexDirection: "column" }}>
-          <Box className="rounded-md bg-red-500 mr-auto mb-2">
-            <Typography
-              variant="body2"
-              component="p"
-              className="text-white font-extrabold p-2"
-            >
-              アカウント登録
-            </Typography>
-          </Box>
-          <Grid container alignItems="center" style={{ height: "100%" }}>
-            <Grid item xs={2}>
-              <ListItemAvatar>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-              </ListItemAvatar>
-            </Grid>
-            <Grid item xs={10}>
-              <Typography variant="body2" color="text.primary">
-                ユーザー名: {userInfo?.account?.name}
-              </Typography>
-            </Grid>
-          </Grid>
-        </ListItem>
-        <Divider component="li" />
-      {/* <Point /> */}
-        <ListItem style={{ display: "flex", flexDirection: "column" }}>
-          <Box className="rounded-md bg-red-500 mr-auto mb-2">
-            <Typography
-              variant="body2"
-              component="p"
-              className="text-white font-extrabold p-2"
-            >
-              POINT
-            </Typography>
-          </Box>
-          <Grid
-            container
-            alignItems="center"
-            style={{ height: "100%", margin: 4 }}
-          >
-            <Grid item xs={6}>
-              <Typography variant="body2" color="text.primary">
-                今月の利用状況
-              </Typography>
-            </Grid>
-            <Grid item xs={4}>
-              <Typography color="text.primary" fontSize="20px">
-                {userInfo?.point?.this_month}pt
-              </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Button className="bg-gray-100 text-teal-400 font-bold hover:bg-gray-200">
-                詳細
+    <>
+      <UserHeader></UserHeader>
+      <Grid container>
+        <Grid item sx={{ p: 4 }} xs={6}>
+          <List sx={{ width: "100%", maxWidth: 500 }}>
+            <Account title="アカウント" userInfo={userInfo} />
+            <Divider component="li" />
+            {/* <Point /> */}
+            <ListItem style={{ display: "flex", flexDirection: "column" }}>
+              <Box className="rounded-md bg-orange-500 mr-auto mb-2">
+                <Typography
+                  variant="body2"
+                  component="p"
+                  className="text-white font-extrabold p-2"
+                >
+                  POINT
+                </Typography>
+              </Box>
+              <Grid
+                container
+                alignItems="center"
+                style={{ height: "100%", margin: 4 }}
+              >
+                <Grid item xs={6}>
+                  <Typography variant="body2" color="text.primary">
+                    今月の利用状況
+                  </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography color="text.primary" fontSize="20px">
+                    {userInfo?.point?.this_month}pt
+                  </Typography>
+                </Grid>
+                <Grid item xs={2}>
+                  <Button
+                    className="bg-gray-100 text-teal-400 font-bold hover:bg-gray-200"
+                    onClick={handleOpenThisMonthPointDrawer}
+                  >
+                    詳細
+                  </Button>
+                </Grid>
+                <Box color="text.secondary" fontSize="12px" marginLeft="auto">
+                  利用上限まで残り {5000 - userInfo?.point?.this_month}pt
+                </Box>
+              </Grid>
+              <Grid
+                container
+                alignItems="center"
+                style={{ height: "100%", margin: 4 }}
+              >
+                <Grid item xs={6}>
+                  <Typography variant="body2" color="text.primary">
+                    先月までの利用履歴
+                  </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography color="text.primary" fontSize="20px">
+                    {userInfo?.point?.history}pt
+                  </Typography>
+                </Grid>
+                <Grid item xs={2}>
+                  <Button className="bg-gray-100 text-teal-400 font-bold hover:bg-gray-200"
+                  onClick={handleOpenHistoryPointDrawer}>
+                    詳細
+                  </Button>
+                </Grid>
+              </Grid>
+            </ListItem>
+            <Divider component="li" />
+            {/* <Coin /> */}
+            <ListItem style={{ display: "flex", flexDirection: "column" }}>
+              <Grid container spacing={2}>
+                <Grid item>
+              <Box className="rounded-md bg-orange-500 mr-auto mb-2">
+                <Typography
+                  variant="body2"
+                  component="p"
+                  className="text-white font-extrabold p-2"
+                >
+                  COIN
+                </Typography>
+              </Box>
+              </Grid>
+              <Grid item>
+              <Button className="bg-gray-100 text-teal-400 font-bold hover:bg-gray-200" onClick={handleOpenDepositCoinDrawer}>
+                    取得履歴
               </Button>
-            </Grid>
-            <Box color="text.secondary" fontSize="12px" marginLeft="auto">
-              利用上限まで残り {5000 - userInfo?.point?.this_month}pt
-            </Box>
-          </Grid>
-          <Grid
-            container
-            alignItems="center"
-            style={{ height: "100%", margin: 4 }}
+              </Grid>
+              </ Grid>
+              <Grid
+                container
+                alignItems="center"
+                style={{ height: "100%", margin: 4 }}
+              >
+                <Grid item xs={6}>
+                  <Typography variant="body2" color="text.primary">
+                    所持コイン
+                  </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography color="text.primary" fontSize="20px">
+                    {userInfo?.coin?.hold}pt
+                  </Typography>
+                </Grid>
+                <Grid item xs={2}>
+                  <Button className="bg-teal-400 text-white font-bold hover:bg-teal-500" onClick={handleOpenConvertCoinDrawer}>
+                    換金
+                  </Button>
+                </Grid>
+              </Grid>
+              <Grid
+                container
+                alignItems="center"
+                style={{ height: "100%", margin: 4 }}
+              >
+                <Grid item xs={6}>
+                  <Typography variant="body2" color="text.primary">
+                    累計換金額
+                  </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography color="text.primary" fontSize="20px">
+                    {userInfo?.coin?.deposit}pt
+                  </Typography>
+                </Grid>
+                <Grid item xs={2}>
+                  <Button className="bg-gray-100 text-teal-400 font-bold hover:bg-gray-200" onClick={handleOpenHistoryConvertCoinDrawer}>
+                    詳細
+                  </Button>
+                </Grid>
+              </Grid>
+              <Grid
+                container
+                alignItems="center"
+                style={{ height: "100%", margin: 4 }}
+              >
+                <Grid item xs={6}>
+                  <Typography variant="body2" color="text.primary">
+                    来月取得見込みコイン
+                  </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography color="text.primary" fontSize="20px">
+                    {userInfo?.coin?.estimate}pt
+                  </Typography>
+                </Grid>
+                <Grid item xs={2}>
+                  <Button className="bg-gray-100 text-teal-400 font-bold hover:bg-gray-200" onClick={handleOpenEstimateCoinDrawer}>
+                    詳細
+                  </Button>
+                </Grid>
+              </Grid>
+            </ListItem>
+          </List>
+        </Grid>
+        {/* <Detail> */}
+          <animated.div
+            style={{
+              ...slideStyles,
+              width: "50%",
+              height: "100%",
+              position: "absolute",
+              right: 0,
+              borderLeft: "2px solid gray",
+              padding: '32px',
+            }}
           >
-            <Grid item xs={6}>
-              <Typography variant="body2" color="text.primary">
-                先月までの利用履歴
-              </Typography>
-            </Grid>
-            <Grid item xs={4}>
-              <Typography color="text.primary" fontSize="20px">
-                {userInfo?.point?.history}pt
-              </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Button className="bg-gray-100 text-teal-400 font-bold hover:bg-gray-200">
-                詳細
-              </Button>
-            </Grid>
-          </Grid>
-        </ListItem>
-        <Divider component="li" />
-      {/* <Coin /> */}
-        <ListItem style={{ display: "flex", flexDirection: "column" }}>
-          <Box className="rounded-md bg-red-500 mr-auto mb-2">
-            <Typography
-              variant="body2"
-              component="p"
-              className="text-white font-extrabold p-2"
-            >
-              COIN
-            </Typography>
-          </Box>
-          <Grid
-            container
-            alignItems="center"
-            style={{ height: "100%", margin: 4 }}
-          >
-            <Grid item xs={6}>
-              <Typography variant="body2" color="text.primary">
-                所持コイン
-              </Typography>
-            </Grid>
-            <Grid item xs={4}>
-              <Typography color="text.primary" fontSize="20px">
-                {userInfo?.coin?.hold}pt
-              </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Button className="bg-teal-400 text-white font-bold hover:bg-teal-500">
-                換金
-              </Button>
-            </Grid>
-          </Grid>
-          <Grid
-            container
-            alignItems="center"
-            style={{ height: "100%", margin: 4 }}
-          >
-            <Grid item xs={6}>
-              <Typography variant="body2" color="text.primary">
-                累計換金額
-              </Typography>
-            </Grid>
-            <Grid item xs={4}>
-              <Typography color="text.primary" fontSize="20px">
-                {userInfo?.coin?.deposit}pt
-              </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Button className="bg-gray-100 text-teal-400 font-bold hover:bg-gray-200">
-                詳細
-              </Button>
-            </Grid>
-          </Grid>
-          <Grid
-            container
-            alignItems="center"
-            style={{ height: "100%", margin: 4 }}
-          >
-            <Grid item xs={6}>
-              <Typography variant="body2" color="text.primary">
-                来月取得見込みコイン
-              </Typography>
-            </Grid>
-            <Grid item xs={4}>
-              <Typography color="text.primary" fontSize="20px">
-                {userInfo?.coin?.estimate}pt
-              </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Button className="bg-gray-100 text-teal-400 font-bold hover:bg-gray-200">
-                詳細
-              </Button>
-            </Grid>
-          </Grid>
-        </ListItem>
-      </List>
-    </Box>
+            <PointDetail detail = {detail}/>
+          </animated.div>
+      </Grid>
+    </>
   );
 };
 

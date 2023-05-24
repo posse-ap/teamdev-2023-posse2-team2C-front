@@ -61,6 +61,75 @@ const UserService = {
       return [];
     }
   },
+
+  fetchThisMonthPointDetail: async function () {
+    try {
+      const response = await fetch(
+        "http://localhost/api/detail/point/this_month",
+        {
+          credentials: "include",
+        }
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return [];
+    }
+  },
+  fetchHistoryPointDetail: async function () {
+    try {
+      const response = await fetch(
+        "http://localhost/api/detail/point/history",
+        {
+          credentials: "include",
+        }
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return [];
+    }
+  },
+  fetchDepositCoinDetail: async function () {
+    try {
+      const response = await fetch("http://localhost/api/detail/coin/deposit", {
+        credentials: "include",
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return [];
+    }
+  },
+
+  fetchHistoryConvertCoinDetail: async function () {
+    try {
+      const response = await fetch("http://localhost/api/detail/coin/convert", {
+        credentials: "include",
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return [];
+    }
+  },
+
+  fetchEstimateCoinDetail: async function () {
+    try {
+      const response = await fetch("http://localhost/api/detail/coin/estimate", {
+        credentials: "include",
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return [];
+    }
+  },
 };
 
 export { UserService };
