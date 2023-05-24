@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import UserHeader from "../../components/UserHeader";
-import UserTab from "../../components/UserTab";
+import UserHeader from "@/components/UserHeader";
+import UserTab from "@/components/UserTab";
 import { useRouter } from "next/router";
 import { Box, Button, Typography, Container } from "@mui/material";
 

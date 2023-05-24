@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
-import ManagementTable from "../../components/admin/UserManagementTable";
-import { UserService } from "../../services/userService";
+import ManagementTable from "@/components/admin/UserManagementTable";
+import { UserService } from "@/services/userService";
 import axios from "axios";
 
 const UserManagement = () => {

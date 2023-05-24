@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SimpleHeader from "../../components/UserHeader-simple.js";
+import SimpleHeader from "@/components/UserHeader-simple.js";
 import { useRouter } from "next/router";
 
 import { Box, Button, Typography, Container } from "@mui/material";

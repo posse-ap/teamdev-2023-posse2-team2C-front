@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import UserTab from "../../components/UserTab.js";
-import UserHeader from "../../components/UserHeader.js";
-import FavoriteIcon from "../../components/LikeButton.js";
+import UserTab from "@/components/UserTab.js";
+import UserHeader from "@/components/UserHeader.js";
+import FavoriteIcon from "@/components/LikeButton.js";
 import { useRouter } from "next/router";
 import { Box, Button, Typography, Container, Link } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
