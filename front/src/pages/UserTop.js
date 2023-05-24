@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import Card from "../components/Card.js";
 import UserTab from "../components/UserTab.js";
 import UserHeader from "../components/UserHeader.js";
@@ -16,23 +16,25 @@ import {
   Select,
   FormControl,
   MenuItem,
-  InputLabel
+  InputLabel,
 } from "@mui/material";
+import axios from "./auth/axios.js";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
-const UserTop=() => {
+const UserTop = () => {
   const [items, setItems] = useState([]);
-  
+
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await fetch('http://localhost/api/cards');
-        const data = await response.json();
-        setItems(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
+      // const response = await fetch("http://localhost/api/cards");
+      await axios
+        .get("http://localhost/api/cards", {
+          withCredentials: true,
+        })
+        .then((response) => {
+          setItems(response.data);
+        });
     };
 
     fetchData();
@@ -55,7 +57,7 @@ const UserTop=() => {
             <Checkbox {...label} />
             貸出中も表示
           </Box>
-        <SelectBox></SelectBox>
+          <SelectBox></SelectBox>
         </Box>
         <Grid container spacing={10}>
           {items?.map((item) => (
@@ -65,6 +67,6 @@ const UserTop=() => {
       </Container>
     </div>
   );
-}
+};
 
 export default UserTop;
