@@ -36,9 +36,9 @@ const UserManagement = () => {
       setDetail(data);
     };
     fetchData();
-    setDetailOpen('ThisMonthPoint');
-    setDetailTitle('今月のpt利用状況');
-    setDetailDateName('引落日');
+    setDetailOpen("ThisMonthPoint");
+    setDetailTitle("今月のpt利用状況");
+    setDetailDateName("引落日");
   };
 
   const handleOpenHistoryPointDrawer = () => {
@@ -47,9 +47,9 @@ const UserManagement = () => {
       setDetail(data);
     };
     fetchData();
-    setDetailOpen('HistoryPoint');
-    setDetailTitle('先月までのpt利用履歴');
-    setDetailDateName('引落日');
+    setDetailOpen("HistoryPoint");
+    setDetailTitle("先月までのpt利用履歴");
+    setDetailDateName("引落日");
   };
 
   const handleOpenHistoryConvertCoinDrawer = () => {
@@ -58,9 +58,9 @@ const UserManagement = () => {
       setDetail(data);
     };
     fetchData();
-    setDetailOpen('HistoryConvertCoin');
-    setDetailTitle('換金状況');
-    setDetailDateName('申請日');
+    setDetailOpen("HistoryConvertCoin");
+    setDetailTitle("換金状況");
+    setDetailDateName("申請日");
   };
 
   const handleOpenDepositCoinDrawer = () => {
@@ -69,9 +69,9 @@ const UserManagement = () => {
       setDetail(data);
     };
     fetchData();
-    setDetailOpen('DepositCoin');
-    setDetailTitle('coin取得履歴');
-    setDetailDateName('付与日');
+    setDetailOpen("DepositCoin");
+    setDetailTitle("coin取得履歴");
+    setDetailDateName("付与日");
   };
 
   const handleOpenEstimateCoinDrawer = () => {
@@ -80,20 +80,14 @@ const UserManagement = () => {
       setDetail(data);
     };
     fetchData();
-    setDetailOpen('EstimateCoin');
-    setDetailTitle('取得見込みcoin');
-    setDetailDateName('開始日');
+    setDetailOpen("EstimateCoin");
+    setDetailTitle("取得見込みcoin");
+    setDetailDateName("開始日");
   };
 
   const handleOpenConvertCoinDrawer = () => {
     // todo
-
   };
-
-
-
-
-  console.log(userInfo);
 
   const slideStyles = useSpring({
     from: { transform: "translateX(100%)" },
@@ -127,69 +121,80 @@ const UserManagement = () => {
     </ListItem>
   );
 
-  const PointDetail = ({detail}) => {
-    if(detail.length !== 0){
+  const PointDetail = ({ detail }) => {
+    if (detail.length !== 0) {
       return (
-    <Box sx={{ maxWidth: 500 }}>
-    <Typography>{detailTitle}</Typography>
+        <Box sx={{ maxWidth: 500 }}>
+          <Typography>{detailTitle}</Typography>
 
-    {
-      detail?.map((item) => (
-        <>
-    <ListItem style={{ display: "flex", flexDirection: "column" }}>
-    <Grid
-        container
-        alignItems="center"
-        style={{ height: "100%", margin: 4 }}
-      >
-    <Grid item xs={6}>
-      <Grid container alignItems="center" spacing={1}>
-        <Grid item>
-          <Box className= {item?.type?.id === 1 ? "rounded-md bg-teal-400 mr-auto mb-2":"rounded-md bg-orange-500 mr-auto mb-2" }>
-            <Typography
-              variant="body2"
-              component="p"
-              className="text-white font-extrabold p-2"
-            >
-              {item?.type?.name}
-            </Typography>
-          </Box>
-        </Grid>
-        <Grid item>
-          <Typography>{detailDateName}：{item?.date}</Typography>
-        </Grid>
-      </Grid>
-          <Typography variant="body2" color="text.primary">
-            {detailOpen === "HistoryConvertCoin" ? "注文ID" : "注文名"}：{item?.name}
-          </Typography>
-        </Grid>
-        <Grid item xs={4}>
-          <Typography color="text.primary" fontSize="20px">
-            {userInfo?.point?.this_month}pt
-          </Typography>
-        </Grid>
-        <Grid item xs={2}>
-        {detailOpen === "HistoryConvertCoin" ? null : (
-          <Button
-          className="bg-gray-100 text-teal-400 font-bold hover:bg-gray-200"
-          >
-            詳細
-          </Button>
-            )}
-        </Grid>
-    </Grid>
-    </ListItem>
-    <Divider/>
-    </>))}
-</Box>
-  )} else { 
-  return ( 
-  <Box>
-  <Typography>{detailTitle}</Typography>
-    データがありません。
-  </Box>
-)};
-  }
+          {detail?.map((item) => (
+            <>
+              <ListItem style={{ display: "flex", flexDirection: "column" }}>
+                <Grid
+                  container
+                  alignItems="center"
+                  style={{ height: "100%", margin: 4 }}
+                >
+                  <Grid item xs={6}>
+                    <Grid container alignItems="center" spacing={1}>
+                      <Grid item>
+                        <Box
+                          className={
+                            item?.type?.id === 1
+                              ? "rounded-md bg-teal-400 mr-auto mb-2"
+                              : "rounded-md bg-orange-500 mr-auto mb-2"
+                          }
+                        >
+                          <Typography
+                            variant="body2"
+                            component="p"
+                            className="text-white font-extrabold p-2"
+                          >
+                            {item?.type?.name}
+                          </Typography>
+                        </Box>
+                      </Grid>
+                      <Grid item>
+                        <Typography>
+                          {detailDateName}：{item?.date}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                    <Typography variant="body2" color="text.primary">
+                      {detailOpen === "HistoryConvertCoin"
+                        ? "注文ID"
+                        : "注文名"}
+                      ：{item?.name}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography color="text.primary" fontSize="20px">
+                      {userInfo?.point?.this_month}pt
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={2}>
+                    {detailOpen === "HistoryConvertCoin" ? null : (
+                      <Button className="bg-gray-100 text-teal-400 font-bold hover:bg-gray-200">
+                        詳細
+                      </Button>
+                    )}
+                  </Grid>
+                </Grid>
+              </ListItem>
+              <Divider />
+            </>
+          ))}
+        </Box>
+      );
+    } else {
+      return (
+        <Box>
+          <Typography>{detailTitle}</Typography>
+          データがありません。
+        </Box>
+      );
+    }
+  };
 
   return (
     <>
@@ -253,8 +258,10 @@ const UserManagement = () => {
                   </Typography>
                 </Grid>
                 <Grid item xs={2}>
-                  <Button className="bg-gray-100 text-teal-400 font-bold hover:bg-gray-200"
-                  onClick={handleOpenHistoryPointDrawer}>
+                  <Button
+                    className="bg-gray-100 text-teal-400 font-bold hover:bg-gray-200"
+                    onClick={handleOpenHistoryPointDrawer}
+                  >
                     詳細
                   </Button>
                 </Grid>
@@ -265,22 +272,25 @@ const UserManagement = () => {
             <ListItem style={{ display: "flex", flexDirection: "column" }}>
               <Grid container spacing={2}>
                 <Grid item>
-              <Box className="rounded-md bg-orange-500 mr-auto mb-2">
-                <Typography
-                  variant="body2"
-                  component="p"
-                  className="text-white font-extrabold p-2"
-                >
-                  COIN
-                </Typography>
-              </Box>
-              </Grid>
-              <Grid item>
-              <Button className="bg-gray-100 text-teal-400 font-bold hover:bg-gray-200" onClick={handleOpenDepositCoinDrawer}>
+                  <Box className="rounded-md bg-orange-500 mr-auto mb-2">
+                    <Typography
+                      variant="body2"
+                      component="p"
+                      className="text-white font-extrabold p-2"
+                    >
+                      COIN
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid item>
+                  <Button
+                    className="bg-gray-100 text-teal-400 font-bold hover:bg-gray-200"
+                    onClick={handleOpenDepositCoinDrawer}
+                  >
                     取得履歴
-              </Button>
+                  </Button>
+                </Grid>
               </Grid>
-              </ Grid>
               <Grid
                 container
                 alignItems="center"
@@ -297,7 +307,10 @@ const UserManagement = () => {
                   </Typography>
                 </Grid>
                 <Grid item xs={2}>
-                  <Button className="bg-teal-400 text-white font-bold hover:bg-teal-500" onClick={handleOpenConvertCoinDrawer}>
+                  <Button
+                    className="bg-teal-400 text-white font-bold hover:bg-teal-500"
+                    onClick={handleOpenConvertCoinDrawer}
+                  >
                     換金
                   </Button>
                 </Grid>
@@ -318,7 +331,10 @@ const UserManagement = () => {
                   </Typography>
                 </Grid>
                 <Grid item xs={2}>
-                  <Button className="bg-gray-100 text-teal-400 font-bold hover:bg-gray-200" onClick={handleOpenHistoryConvertCoinDrawer}>
+                  <Button
+                    className="bg-gray-100 text-teal-400 font-bold hover:bg-gray-200"
+                    onClick={handleOpenHistoryConvertCoinDrawer}
+                  >
                     詳細
                   </Button>
                 </Grid>
@@ -339,7 +355,10 @@ const UserManagement = () => {
                   </Typography>
                 </Grid>
                 <Grid item xs={2}>
-                  <Button className="bg-gray-100 text-teal-400 font-bold hover:bg-gray-200" onClick={handleOpenEstimateCoinDrawer}>
+                  <Button
+                    className="bg-gray-100 text-teal-400 font-bold hover:bg-gray-200"
+                    onClick={handleOpenEstimateCoinDrawer}
+                  >
                     詳細
                   </Button>
                 </Grid>
@@ -348,19 +367,19 @@ const UserManagement = () => {
           </List>
         </Grid>
         {/* <Detail> */}
-          <animated.div
-            style={{
-              ...slideStyles,
-              width: "50%",
-              height: "100%",
-              position: "absolute",
-              right: 0,
-              borderLeft: "2px solid gray",
-              padding: '32px',
-            }}
-          >
-            <PointDetail detail = {detail}/>
-          </animated.div>
+        <animated.div
+          style={{
+            ...slideStyles,
+            width: "50%",
+            height: "100%",
+            position: "absolute",
+            right: 0,
+            borderLeft: "2px solid gray",
+            padding: "32px",
+          }}
+        >
+          <PointDetail detail={detail} />
+        </animated.div>
       </Grid>
     </>
   );
