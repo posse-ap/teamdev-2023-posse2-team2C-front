@@ -58,7 +58,7 @@ const UserTop=() => {
         <SelectBox></SelectBox>
         </Box>
         <Grid container spacing={10}>
-          {items.map((item) => (
+          {items?.map((item) => (
             <Card event={item} />
           ))}
         </Grid>

@@ -13,7 +13,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import Modal from "@/components/Modal";
 
-const UserManagementTable = ({ data, headers }) => {
+const UserManagementTable = ({ data, headers, handleClickDeleteButton, handleClickRoleButton }) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(-1);
   const handleOpenDeleteModal = (id) => setDeleteModalOpen(id);
   const handleCloseDeleteModal = () => setDeleteModalOpen(-1);
@@ -61,6 +61,7 @@ const UserManagementTable = ({ data, headers }) => {
                     <Modal
                       open={roleModalOpen === id}
                       onClose={handleCloseRoleModal}
+                      onConfirm={() => handleClickRoleButton(id, is_admin)}
                       title={
                         is_admin
                           ? "管理者権限を取消しますか?"
@@ -81,6 +82,7 @@ const UserManagementTable = ({ data, headers }) => {
                     <Modal
                       open={deleteModalOpen === id}
                       onClose={handleCloseDeleteModal}
+                      onConfirm={() => handleClickDeleteButton(id)}
                       title="ユーザーを削除しますか？"
                       description={`ユーザー名：${rest.name}`}
                       cancelButtonText="戻る"

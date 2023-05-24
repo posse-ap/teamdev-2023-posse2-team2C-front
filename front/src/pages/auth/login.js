@@ -14,10 +14,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import SimpleUserHeader from "@/components/UserHeader-simple";
-
 import axios from "axios";
 import { ChangeEvent, useState, useEffect } from "react";
-
 
 function Copyright(props) {
   return (
