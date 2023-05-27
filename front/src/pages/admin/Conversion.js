@@ -8,57 +8,42 @@ const label = { inputProps: { "aria-label": "Checkbox demo" } };
 const CoinsConversion = () => {
   const [applications, setApplications] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      //   const data = await fetchUsers();
-      //
-      // path名 /users の get
-      const data = [
-        {
-          id: 1,
-          is_converted: false,
-          name: "name1",
-          conversion_type: "アマギフ",
-          coin_amount: 100,
-          applied_at: "2023-04-04",
-        },
-        {
-          id: 2,
-          is_converted: false,
-          name: "name2",
-          conversion_type: "アマギフ",
-          coin_amount: 200,
-          applied_at: "2023-03-03",
-        },
-        {
-          id: 3,
-          is_converted: true,
-          name: "name3",
-          conversion_type: "アマギフ",
-          coin_amount: 300,
-          applied_at: "2023-02-02",
-        },
-      ];
-      setApplications(data);
-    };
+  const fetchData = async () => {
+    await axios
+      .get("http://localhost:80/api/show/conversion", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        const data = response.data;
+        setApplications(data);
+        console.log(data);
+      })
+      .catch(function (error) {
+        console.log(error);
+        alert("データが取得できませんでした");
+        const data = [];
+        setApplications(data);
+      });
+  };
 
+  useEffect(() => {
 
     axios
-    .get("http://localhost:80/api/role", { withCredentials: true })
-    .then((response) => {
-      if (response.data !== 2) {
-        alert("アクセス権限がありません。TOPページに戻ります。");
-        router.push("/UserTop");
+      .get("http://localhost:80/api/role", { withCredentials: true })
+      .then((response) => {
+        if (response.data !== 2) {
+          alert("アクセス権限がありません。TOPページに戻ります。");
+          router.push("/UserTop");
+          return;
+        } else {
+          fetchData();
+        }
+      })
+      .catch(function (error) {
+        alert("ログイン情報がありません。");
+        router.push("/auth/login");
         return;
-      } else {
-        fetchData();
-      }
-    })
-    .catch(function (error) {
-      alert("ログイン情報がありません。");
-      router.push("/auth/login");
-      return;
-    });
+      });
   }, []);
 
   const headers = ["申請者", "換金方法", "coin", "申請日", "換金状況"];
