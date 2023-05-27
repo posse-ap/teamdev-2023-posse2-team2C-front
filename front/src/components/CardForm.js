@@ -11,14 +11,8 @@ import React, { useState, useEffect } from "react";
 import { MuiFileInput } from "mui-file-input";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 
-const CardForm = () => {
-  const [file, setFile] = useState();
+const CardForm = ({changeFile, file}) => {
   const [preview, setPreview] = useState();
-
-  //ファイルhandleChange関数
-  const handleChangeFile = (newFile) => {
-    setFile(newFile);
-  };
 
   //メモリ内のBLOBにアクセスするためのURL生成
   useEffect(() => {
@@ -90,8 +84,9 @@ const CardForm = () => {
       </Box>
         <MuiFileInput
           value={file}
-          onChange={handleChangeFile}
+          onChange={changeFile}
           variant="outlined"
+          name="image"
         />
     </Paper>
   );
