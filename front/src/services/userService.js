@@ -130,6 +130,23 @@ const UserService = {
       return [];
     }
   },
+
+  handleChangeConvertValue: async function (amount) {
+    await axios
+      .post(
+        `http://localhost/api/coin/convert`,
+        { amount: amount},
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log("Error", error.message);
+      });
+  },
 };
 
 export { UserService };
