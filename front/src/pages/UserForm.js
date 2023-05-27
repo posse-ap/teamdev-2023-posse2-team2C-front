@@ -50,19 +50,26 @@ const UserForm = () => {
       detail: detail,
       message: message,
     };
+    const params = new FormData();
+      Object.keys(postParams).forEach(function(key) {
+        params.append(key, this[key]);
+      }, postParams);
     await axios
-      .post("http://localhost:80/api/createItem", postParams, {
+      .post("http://localhost:80/api/createItem", params, {
         withCredentials: true,
+        header: {
+          'Content-Type': 'multipart/form-data',
+        },
       })
       .then((response) => {
-        console.log(response.data);
+        alert(response.data);
       });
   };
 
   return (
     <div className="App">
       <UserHeader></UserHeader>
-      <Container enctype="multipart/form-data">
+      <Container>
         <Box className="flex items-center">
           <Link href="/UserTop">
             <span>
