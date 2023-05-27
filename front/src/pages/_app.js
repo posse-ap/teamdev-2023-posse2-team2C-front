@@ -25,6 +25,7 @@ export default function MyApp(props) {
         console.log(response.data);
       })
       .catch(function (error) {
+        alert("ログイン情報がありません。")
         window.location.href = "http://localhost:3000/auth/login";
       });
   }
