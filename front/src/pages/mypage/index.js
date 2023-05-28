@@ -19,7 +19,7 @@ import MyPageHeader from "../../components/MyPageHeader.js";
 import { useSpring, animated } from "@react-spring/web";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-const index = () => {
+const Index = () => {
   const [userInfo, setUserInfo] = useState();
   const [detail, setDetail] = useState([]);
   const [detailTitle, setDetailTitle] = useState();
@@ -448,4 +448,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;
