@@ -11,6 +11,7 @@ import Link  from 'next/link'
 import { useRouter } from "next/router";
 import { UserContext } from "../pages/_app";
 import { Button } from "@mui/material";
+import axios from "axios";
 
 
 export default function UserHeader() {
@@ -32,6 +33,16 @@ export default function UserHeader() {
     setAnchorEl(null);
   };
 
+  const logoutClick = () => {
+    axios
+      .get("http://localhost:80/api/logout", { withCredentials: true })
+      .then((response) => {
+        console.log(response.data);
+        alert(response.data.message + " が完了しました");
+        router.push("http://localhost:3000/auth/login");
+      });
+  };
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -50,12 +61,14 @@ export default function UserHeader() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={() => onClickNavigation("/mypage")}>アカウント情報</MenuItem>
-      <MenuItem onClick={() => onClickNavigation("/mypage/helpPage")}>出品</MenuItem>
-      <MenuItem onClick={() => onClickNavigation("/mypage/helpPage")}>レンタル品</MenuItem>
+      <MenuItem onClick={() => onClickNavigation("/mypage/list")}>出品一覧</MenuItem>
+      <MenuItem onClick={() => onClickNavigation("/mypage/rentalItems")}>レンタル品</MenuItem>
       <MenuItem onClick={() => onClickNavigation("/mypage/helpPage")}>ヘルプ</MenuItem>
       {user?.role_id === 2 ? (
         <MenuItem onClick={() => onClickNavigation("/admin/ListingReview")}>管理者ページへ</MenuItem>
       ) : null }
+      <MenuItem onClick={() => logoutClick()}>
+        ログアウト</MenuItem>
     </Menu>
   );
 
