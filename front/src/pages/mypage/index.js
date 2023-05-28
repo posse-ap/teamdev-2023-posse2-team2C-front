@@ -207,7 +207,7 @@ const Index = () => {
                   </Grid>
                   <Grid item xs={4}>
                     <Typography color="text.primary" fontSize="20px">
-                      {userInfo?.point?.this_month + unit}
+                      {item?.amount + unit}
                     </Typography>
                   </Grid>
                 </Grid>
