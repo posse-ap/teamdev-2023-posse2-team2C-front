@@ -153,9 +153,9 @@ const Index = () => {
         <Box sx={{ maxWidth: 500 }}>
           <Typography>{detailTitle}</Typography>
 
-          {detail?.map((item) => (
+          {detail?.map((item, index) => (
             <>
-              <ListItem style={{ display: "flex", flexDirection: "column" }}>
+              <ListItem key={index} style={{ display: "flex", flexDirection: "column" }}>
                 <Grid
                   container
                   alignItems="center"
@@ -260,7 +260,7 @@ const Index = () => {
 
   return (
     <>
-      <UserHeader></UserHeader>
+      <UserHeader/>
       <MyPageHeader/>
       <Grid container>
         <Grid item sx={{ p: 4 }} xs={6}>
