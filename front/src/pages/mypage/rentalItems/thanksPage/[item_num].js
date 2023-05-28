@@ -29,7 +29,7 @@ const ThanksPage = () => {
   return (
     <div className="App">
       <UserHeader></UserHeader>
-      <UserTab></UserTab>
+      {/* <UserTab></UserTab> */}
       <Container>
         <Box className="mx-auto mt-20 w-3/4 text-center">
           <Typography variant="h4" component="h2" className="mb-5">

@@ -40,24 +40,23 @@ const UserTop = () => {
     fetchData();
   }, []);
 
-  console.log(items);
   return (
     <div className="App">
       <UserHeader></UserHeader>
-      <UserTab></UserTab>
+      {/* <UserTab></UserTab> */}
       <Container>
         <img
           src="https://cdn.discordapp.com/attachments/1102773675498934385/1102901899100962847/Screen_Shot_2023-05-02_at_19.17.58.png"
           className="hero-img"
         />
         <Box className="my-2 flex justify-between">
-          <Box className="flex items-center">
+          {/* <Box className="flex items-center">
             <Checkbox {...label} />
             Coming Soonも表示
             <Checkbox {...label} />
             貸出中も表示
-          </Box>
-          <SelectBox></SelectBox>
+          </Box> */}
+          {/* <SelectBox></SelectBox> */}
         </Box>
         <Grid container spacing={10}>
           {items?.map((item) => (
