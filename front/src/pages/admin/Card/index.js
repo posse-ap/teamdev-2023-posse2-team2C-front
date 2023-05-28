@@ -54,6 +54,7 @@ const cardList = () => {
   }, []);
 
   console.log(items);
+  if (items.length !== 0  ) { 
   return (
     <div className="App">
       <Container>
@@ -61,13 +62,28 @@ const cardList = () => {
           全カード
         </Typography>
         <Grid container spacing={10}>
-          {items?.map((item) => (
-            <Card event={item} />
+          {items?.map((item, index) => (
+            <Card key={index} event={item} />
           ))}
         </Grid>
       </Container>
     </div>
   );
+} else {
+  return (
+    <div className="App">
+      <Container>
+        <Typography variant="h4" component="h1" gutterBottom sx={{ px: 2 }}>
+          全カード
+        </Typography>
+        <Typography variant="h6" component="h1" gutterBottom sx={{ px: 2 }}>
+          現在出品されているアイテム・イベントはありません。
+        </Typography>
+
+      </Container>
+    </div>
+  )
+}
 };
 
 export default cardList;
