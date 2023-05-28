@@ -58,7 +58,7 @@ const ItemDetail = () => {
   return (
     <div className="App">
       <UserHeader></UserHeader>
-      <UserTab></UserTab>
+      {/* <UserTab></UserTab> */}
       <Container
         sx={{
           display: "flex",

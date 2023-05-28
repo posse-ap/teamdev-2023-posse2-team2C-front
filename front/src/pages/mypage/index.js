@@ -13,13 +13,13 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
-import { UserService } from "../services/userService";
-import UserHeader from "../components/UserHeader.js";
-import MyPageHeader from "../components/MyPageHeader.js";
+import { UserService } from "../../services/userService";
+import UserHeader from "../../components/UserHeader.js";
+import MyPageHeader from "../../components/MyPageHeader.js";
 import { useSpring, animated } from "@react-spring/web";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-const MyPage = () => {
+const Index = () => {
   const [userInfo, setUserInfo] = useState();
   const [detail, setDetail] = useState([]);
   const [detailTitle, setDetailTitle] = useState();
@@ -153,9 +153,9 @@ const MyPage = () => {
         <Box sx={{ maxWidth: 500 }}>
           <Typography>{detailTitle}</Typography>
 
-          {detail?.map((item) => (
+          {detail?.map((item, index) => (
             <>
-              <ListItem style={{ display: "flex", flexDirection: "column" }}>
+              <ListItem key={index} style={{ display: "flex", flexDirection: "column" }}>
                 <Grid
                   container
                   alignItems="center"
@@ -260,7 +260,7 @@ const MyPage = () => {
 
   return (
     <>
-      <UserHeader></UserHeader>
+      <UserHeader/>
       <MyPageHeader/>
       <Grid container>
         <Grid item sx={{ p: 4 }} xs={6}>
@@ -448,4 +448,4 @@ const MyPage = () => {
   );
 };
 
-export default MyPage;
+export default Index;

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Card from "@/components/Card.js";
 import UserTab from "@/components/UserTab.js";
 import UserHeader from "@/components/UserHeader.js";
+import MyPageHeader from "@/components/MyPageHeader.js";
 import SelectBox from "@/components/SelectBox.js";
 import PropTypes from "prop-types";
 import { Container, Typography } from "@mui/material";
@@ -12,7 +13,8 @@ const UserTop = () => {
   return (
     <div className="App">
       <UserHeader></UserHeader>
-      <UserTab></UserTab>
+      {/* <UserTab></UserTab> */}
+      <MyPageHeader/>
       <Container>
         <Typography variant="h4" component="h1" className="mb-5 text-center">
           ＜PeerPerkについて＞
