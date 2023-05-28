@@ -1,13 +1,12 @@
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import FavoriteIcon from "./LikeButton.js";
+import FavoriteIcon from "@/components/LikeButton.js";
 import { Typography, Box, Link } from "@mui/material";
 
 const Card = ({ event }) => {
-  const item_url = event.is_item ? `http://localhost:3000/mypage/rentalItems/${event.item_id}` : null;
+  const item_url = event.is_item ? `Card/${event.id}` : null;
   return (
-    <Grid item xs={4}>
-      <Link href={item_url} className="hover:no-underline no-underline">
+    <Grid item xs={4} className="w-2/3">
         <Paper elevation={3} className="rounded-lg">
           <Box padding={1} className="relative">
             <img
@@ -115,7 +114,6 @@ const Card = ({ event }) => {
             </Box>
           </Box>
         </Paper>
-      </Link>
     </Grid>
   );
 };

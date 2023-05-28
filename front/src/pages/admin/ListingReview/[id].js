@@ -5,6 +5,7 @@ import FavoriteIcon from "@/components/LikeButton.js";
 import { Box, Button, Typography, Container, Link } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import TextField from "@mui/material/TextField";
+import Header from "../../../components/admin/Header";
 
 function ListingReviewItem() {
   const [item, setItems] = useState([]);
@@ -39,6 +40,7 @@ function ListingReviewItem() {
       })
       .then((response) => {
         console.log(response.data);
+        alert(response.data);
       })
       .catch(function (error) {
         console.log(error.message);
@@ -78,13 +80,14 @@ function ListingReviewItem() {
 
   return (
     <div className="App">
+      <Header></Header>
       <Container
         sx={{
           display: "flex",
           justifyContent: "space-between",
         }}
       >
-        <Link href="/UserTop">
+        <Link href="/admin/ListingReview">
           <span>
             <ArrowBackIosIcon />
           </span>
@@ -119,7 +122,6 @@ function ListingReviewItem() {
             <Typography variant="h4" component="h2">
               {item.name}
             </Typography>
-            <FavoriteIcon></FavoriteIcon>
           </Box>
           <Box
             style={{ padding: 0 }}
@@ -128,9 +130,6 @@ function ListingReviewItem() {
               justifyContent: "space-between",
             }}
           >
-            <Typography variant="h6" component="p" className="underline">
-              {item.likes} likes
-            </Typography>
           </Box>
           <Typography variant="h6" component="p">
             商品の説明

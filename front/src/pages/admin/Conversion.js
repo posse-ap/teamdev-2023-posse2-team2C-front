@@ -4,6 +4,7 @@ import CoinsConversionTable from "@/components/admin/CoinsConversionTable";
 import { ConversionService } from "@/services/conversionService";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Header from "../../components/admin/Header";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -55,6 +56,8 @@ const CoinsConversion = () => {
   }
 
   return (
+    <>
+    <Header></Header>
     <Box sx={{ p: 4 }}>
       <Box className="flex items-center">
         <Typography variant="h4" component="h1" gutterBottom sx={{ px: 2 }}>
@@ -65,6 +68,7 @@ const CoinsConversion = () => {
       </Box>
       <CoinsConversionTable data={applications} headers={headers} handleClick={handleClickConversionButton}/>
     </Box>
+    </>
   );
 };
 

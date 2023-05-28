@@ -133,13 +133,13 @@ const UserForm = () => {
             className="rounded-md bg-teal-400 px-2 py-3 my-2 text-lg"
             onClick={openModal}
           >
-            確認画面へ
+            出品する
           </Button>
           <Modal
             open={isModalOpen}
             onClose={closeModal}
             onConfirm={handlePost}
-            title={"出品しますか？"}
+            title={"本当に出品しますか？"}
             cancelButtonText="入力に戻る"
             confirmButtonText="はい"
           />
