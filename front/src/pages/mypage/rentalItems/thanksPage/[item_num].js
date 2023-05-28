@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import UserHeader from "@/components/UserHeader";
 import UserTab from "@/components/UserTab";
 import { useRouter } from "next/router";
-import { Box, Button, Typography, Container } from "@mui/material";
+import { Box, Button, Typography, Container, Link } from "@mui/material";
 
 const ThanksPage = () => {
   const [item, setItems] = useState([]);
@@ -62,13 +62,10 @@ const ThanksPage = () => {
           </Box>
         </Box>
         <Box className="flex justify-center mt-10">
-          <Button
-            variant="contained"
-            className="rounded-md bg-teal-400 hover:bg-teal-500 px-2 py-3 w-1/2 text-3xl"
-            // onClick={openModal}
-          >
-            TOPへ戻る
-          </Button>
+        <Link href="/UserTop"
+          className="rounded-md bg-teal-400 hover:bg-teal-500 px-2 py-3 w-1/2 text-3xl text-center text-white no-underline">
+              TOPへ戻る
+          </Link>
         </Box>
       </Container>
     </div>

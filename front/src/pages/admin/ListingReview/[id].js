@@ -122,7 +122,6 @@ function ListingReviewItem() {
             <Typography variant="h4" component="h2">
               {item.name}
             </Typography>
-            <FavoriteIcon></FavoriteIcon>
           </Box>
           <Box
             style={{ padding: 0 }}
@@ -131,9 +130,6 @@ function ListingReviewItem() {
               justifyContent: "space-between",
             }}
           >
-            <Typography variant="h6" component="p" className="underline">
-              {item.likes} likes
-            </Typography>
           </Box>
           <Typography variant="h6" component="p">
             商品の説明

@@ -42,6 +42,7 @@ const ListingReview = () => {
 
   const headers = ["ユーザー名", "商品名", "申請日時", ""];
 
+  if (requests.length !== 0  ) { 
   return (
     <>
     <Header></Header>
@@ -53,6 +54,19 @@ const ListingReview = () => {
     </Box>
     </>
   );
+} else {
+  return (
+    <Box sx={{ p: 4 }}>
+    <Typography variant="h4" component="h1" gutterBottom sx={{ px: 2 }}>
+      出品審査待ち一覧
+    </Typography>
+    <Typography variant="h6" component="h1" gutterBottom sx={{ px: 2 }}>
+      現在出品審査待ちのアイテムはありません。
+    </Typography>
+    
+  </Box>
+  )
+}
 };
 
 export default ListingReview;

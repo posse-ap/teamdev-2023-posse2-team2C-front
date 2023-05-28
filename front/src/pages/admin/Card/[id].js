@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import axios from "axios";
-import CardForm from "../components/CardForm.js";
-import Modal from "../components/Modal.js";
-import UserHeader from "../components/UserHeader-simple.js";
+import CardForm from "@/components/CardForm.js";
+import Modal from "@/components/Modal.js";
+import UserHeader from "@/components/UserHeader-simple.js";
 import PropTypes from "prop-types";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import {
@@ -13,14 +14,54 @@ import {
   Button,
   Link,
 } from "@mui/material";
+import CardForEdit from "@/components/admin/CardForEdit";
+
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
-const UserForm = () => {
+const editForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [file, setFile] = useState();
+  const [file, setFile] = useState(null);
   const [itemName, setItemName] = useState("");
   const [detail, setDetail] = useState("");
-  const [message, setMessage] = useState("");
+  const [price, setPrice] = useState(null);
+  const [item, setItem] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    console.log(router.query.id);
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:80/api/card/${router.query.id}`
+        );
+        const data = await response.json();
+        await setItem(data);
+        await setItemName(data["name"]);
+        await setDetail(data["detail"]);
+        await setPrice(data["price"]);
+        console.log(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    axios
+      .get("http://localhost:80/api/role", { withCredentials: true })
+      .then((response) => {
+        if (response.data !== 2) {
+          alert("アクセス権限がありません。TOPページに戻ります。");
+          router.push("/UserTop");
+          return;
+        } else {
+          fetchData();
+        }
+      })
+      .catch(function (error) {
+        alert("ログイン情報がありません。");
+        router.push("/auth/login");
+        return;
+      });
+  }, [router.query.id]);
 
   const changeFile = (file) => {
     setFile(file);
@@ -31,8 +72,8 @@ const UserForm = () => {
   const changeDetail = (e) => {
     setDetail(e.target.value);
   };
-  const changeMessage = (e) => {
-    setMessage(e.target.value);
+  const changePrice = (e) => {
+    setPrice(e.target.value);
   };
 
   const openModal = () => {
@@ -48,43 +89,49 @@ const UserForm = () => {
       image: file,
       itemName: itemName,
       detail: detail,
-      message: message,
+      price: price,
     };
     const params = new FormData();
-      Object.keys(postParams).forEach(function(key) {
-        params.append(key, this[key]);
-      }, postParams);
+    Object.keys(postParams).forEach(function (key) {
+      params.append(key, this[key]);
+    }, postParams);
+    console.log(postParams);
     await axios
-      .post("http://localhost:80/api/createItem", params, {
+      .post(`http://localhost:80/api/itemUpdate/${router.query.id}`, params, {
         withCredentials: true,
         header: {
           'Content-Type': 'multipart/form-data',
         },
       })
       .then((response) => {
+        console.log(response.data);
         alert(response.data);
+      })
+      .catch(function (error) {
+        console.error(error);
       });
   };
 
   return (
     <div className="App">
-      <UserHeader></UserHeader>
       <Container>
         <Box className="flex items-center">
-          <Link href="/UserTop">
+          <Link href="/admin/Card">
             <span>
               <ArrowBackIosIcon />
             </span>
           </Link>
 
           <Typography variant="h4" component="h1">
-            アイテム出品
+            編集
           </Typography>
         </Box>
         <Box className="flex justify-center mt-10">
           <Box className="w-6/12">
+            現在のカード
+            {item ? <CardForEdit event={item} /> : null}
             <Typography variant="h6" component="h2" className="my-2">
-              出品アイテムのプレビュー
+              新しい画像（変更しない場合なしでも可）
             </Typography>
             <CardForm changeFile={changeFile} file={file} />
           </Box>
@@ -93,21 +140,35 @@ const UserForm = () => {
               アイテム名
             </Typography>
             <TextField
-              label="item name"
+              // label="item name"
               variant="filled"
               className="w-full"
               name="itemName"
+              value={itemName}
               onChange={changeItemName}
+            />
+            <Typography variant="h6" component="h2" className="my-2">
+              ポイント(価格)
+            </Typography>
+            <TextField
+              // label="item name"
+              variant="filled"
+              className="w-full"
+              name="itemName"
+              value={price}
+              type="number"
+              onChange={changePrice}
             />
             <Box>
               <Typography variant="h6" component="h2" className="my-2">
                 商品の説明
               </Typography>
               <TextField
-                label="description"
+                // label="description"
                 multiline
                 rows={4}
                 variant="filled"
+                value={detail}
                 className="w-full"
                 name="detail"
                 onChange={changeDetail}
@@ -115,31 +176,19 @@ const UserForm = () => {
             </Box>
           </Box>
         </Box>
-        <Box className="mt-10">
-          <Typography variant="h6" component="h2">
-            管理者に伝えたいこと（任意）
-          </Typography>
-          <TextField
-            label=""
-            variant="filled"
-            className="w-full"
-            name="message"
-            onChange={changeMessage}
-          />
-        </Box>
         <Box className="flex justify-center">
           <Button
             variant="contained"
             className="rounded-md bg-teal-400 px-2 py-3 my-2 text-lg"
             onClick={openModal}
           >
-            出品する
+            更新する
           </Button>
           <Modal
             open={isModalOpen}
             onClose={closeModal}
             onConfirm={handlePost}
-            title={"本当に出品しますか？"}
+            title={"本当に更新しますか？"}
             cancelButtonText="入力に戻る"
             confirmButtonText="はい"
           />
@@ -149,4 +198,4 @@ const UserForm = () => {
   );
 };
 
-export default UserForm;
+export default editForm;
