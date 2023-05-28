@@ -37,6 +37,7 @@ const ItemPayment = () => {
       })
       .then((response) => {
         console.log(response.data);
+        router.push(`thanksPage/${router.query.item_num}`)
       });
       // const data = await response.json();
       // return data;
