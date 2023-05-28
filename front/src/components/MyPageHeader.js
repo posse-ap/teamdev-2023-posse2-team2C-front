@@ -32,10 +32,10 @@ const MyPageHeader = () => {
           <Grid item xs={2}>
             <MenuItem
               sx={{ color: "black", justifyContent: "center" }}
-              onClick={() => onClickNavigation("/mypage/helpPage")} // todo 出品ページのURL貼る
+              onClick={() => onClickNavigation("/mypage/list")}
               selected={router.pathname === "/mypage/list"}
             >
-              出品
+              出品一覧
             </MenuItem>
           </Grid>
           <Grid item xs={2}>
