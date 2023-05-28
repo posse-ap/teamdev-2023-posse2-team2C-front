@@ -11,7 +11,6 @@ import axios from "axios";
 const ItemDetail = () => {
   const [item, setItems] = useState([]);
   const router = useRouter();
-  console.log(router.query.item_num);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,11 +31,12 @@ const ItemDetail = () => {
 
   const storeReturnData = async (id) => {
     await axios
-      .get(`http://localhost/api/mypage/rentals/return/${item.rental_id}'`, {
+      .get(`http://localhost/api/mypage/rentals/return/${item.rental_id}`, {
         withCredentials: true,
       })
       .then((response) => {
         console.log(response.data);
+        router.push(`/mypage/rentalItems/thanksPage/${router.query.id}`)
       });
     // const data = await response.json();
     // return data;
