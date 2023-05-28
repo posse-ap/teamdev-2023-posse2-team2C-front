@@ -16,6 +16,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import SimpleUserHeader from "@/components/UserHeader-simple";
 import axios from "axios";
 import { ChangeEvent, useState, useEffect } from "react";
+import { useRouter } from "next/router";
+
 
 function Copyright(props) {
   return (
@@ -39,6 +41,7 @@ export default function Login() {
   const theme = createTheme();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   const changeEmail = (e) => {
     setEmail(e.target.value);
@@ -62,7 +65,7 @@ export default function Login() {
           })
           .then((response) => {
             if (response.data["logged in"]) {
-              window.location.href = "http://localhost:3000/UserTop";
+              router.push('http://localhost:3000/UserTop');
             } else {
               alert(response.data["message"]);
             }
@@ -139,6 +142,7 @@ export default function Login() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               onClick={handleClick}
+              className="bg-teal-400 hover:bg-teal-500"
             >
               Sign In
             </Button>
@@ -147,6 +151,7 @@ export default function Login() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               onClick={handleUserClick}
+              className="bg-teal-400 hover:bg-teal-500"
             >
               check user
             </Button>
@@ -155,6 +160,7 @@ export default function Login() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               onClick={logoutClick}
+              className="bg-teal-400 hover:bg-teal-500"
             >
               logout
             </Button>
