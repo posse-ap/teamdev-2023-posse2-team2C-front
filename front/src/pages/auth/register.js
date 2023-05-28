@@ -41,6 +41,15 @@ export default function register() {
   const [slack_id, setSlack_id] = useState("");
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
+  const [error, setError] = useState(false);
+
+  const validateEmail = () => {
+    if (email.endsWith("@anti-pattern.co.jp")) {
+      setError(false); // @anti-pattern.co.jpのアドレスならエラーを解除
+    } else {
+      setError(true); // それ以外のアドレスならエラーを表示
+    }
+  };
 
   const changeName = (e) => {
     setName(e.target.value);
@@ -133,6 +142,9 @@ export default function register() {
               autoComplete="email"
               autoFocus
               onChange={changeEmail}
+              onBlur={validateEmail}
+              error={error}
+              helperText={error ? "Invalid email address/ anti-patternのドメインを使用してください" : ""}
             />
             <TextField
               margin="normal"

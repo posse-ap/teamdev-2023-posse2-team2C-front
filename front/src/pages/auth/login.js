@@ -18,7 +18,6 @@ import axios from "axios";
 import { ChangeEvent, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
-
 function Copyright(props) {
   return (
     <Typography
@@ -42,6 +41,15 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const [error, setError] = useState(false);
+
+  const validateEmail = () => {
+    if (email.endsWith("@anti-pattern.co.jp")) {
+      setError(false); // @anti-pattern.co.jpのアドレスならエラーを解除
+    } else {
+      setError(true); // それ以外のアドレスならエラーを表示
+    }
+  };
 
   const changeEmail = (e) => {
     setEmail(e.target.value);
@@ -65,7 +73,7 @@ export default function Login() {
           })
           .then((response) => {
             if (response.data["logged in"]) {
-              router.push('http://localhost:3000/UserTop');
+              router.push("http://localhost:3000/UserTop");
             } else {
               alert(response.data["message"]);
             }
@@ -87,7 +95,7 @@ export default function Login() {
       .get("http://localhost:80/api/logout", { withCredentials: true })
       .then((response) => {
         console.log(response.data);
-        alert(response.data.message + ' が完了しました')
+        alert(response.data.message + " が完了しました");
       });
   };
 
@@ -122,6 +130,9 @@ export default function Login() {
               autoComplete="email"
               autoFocus
               onChange={changeEmail}
+              onBlur={validateEmail}
+              error={error}
+              helperText={error ? "Invalid email address" : ""}
             />
             <TextField
               margin="normal"
