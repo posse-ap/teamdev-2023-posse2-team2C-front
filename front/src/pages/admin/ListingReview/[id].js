@@ -17,7 +17,24 @@ function ListingReviewItem() {
 
   const clickConfirm = (price) => {
     axios
-      .post(`http://localhost:80/api/confirm/${router.query.id}`, {price: price}, {
+      .post(
+        `http://localhost:80/api/confirm/${router.query.id}`,
+        { price: price },
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        alert(response.data);
+      })
+      .catch(function (error) {
+        console.log(error.message);
+      });
+  };
+
+  const clickReject = () => {
+    axios
+      .get(`http://localhost:80/api/reject/${router.query.id}`, {
         withCredentials: true,
       })
       .then((response) => {
@@ -143,10 +160,13 @@ function ListingReviewItem() {
             onChange={changePrice}
             className="w-2/3 rounded-md mx-20"
           />
-          <Button className="rounded-md bg-teal-400 hover:bg-teal-500 px-2 py-3 mx-20 my-5 w-2/3 text-3xl text-white" onClick={() => clickConfirm(price)}>
+          <Button
+            className="rounded-md bg-teal-400 hover:bg-teal-500 px-2 py-3 mx-20 my-5 w-2/3 text-3xl text-white"
+            onClick={() => clickConfirm(price)}
+          >
             承認
           </Button>
-          <Button className="rounded-md bg-gray-100 hover:bg-gray-200 px-2 py-3 mx-20 my-5 w-2/3 text-3xl text-teal-400">
+          <Button className="rounded-md bg-gray-100 hover:bg-gray-200 px-2 py-3 mx-20 my-5 w-2/3 text-3xl text-teal-400" onClick={clickReject}>
             却下
           </Button>
         </Box>
