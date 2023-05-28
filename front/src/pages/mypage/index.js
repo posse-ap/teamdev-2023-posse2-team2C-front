@@ -17,7 +17,7 @@ import { UserService } from "../../services/userService";
 import UserHeader from "../../components/UserHeader.js";
 import MyPageHeader from "../../components/MyPageHeader.js";
 import { useSpring, animated } from "@react-spring/web";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const Index = () => {
   const [userInfo, setUserInfo] = useState();
@@ -26,6 +26,7 @@ const Index = () => {
   const [detailDateName, setDetailDateName] = useState();
   const [detailOpen, setDetailOpen] = useState(false);
   const [convertValue, setConvertValue] = useState();
+  const [unit, setUnit] = useState();
   const [isConvertCoinDisabled, setIsConvertCoinDisabled] = useState(true);
 
   useEffect(() => {
@@ -44,6 +45,14 @@ const Index = () => {
       setIsConvertCoinDisabled(true);
     }
   }, [convertValue, userInfo?.coin?.hold]);
+
+  useEffect(() => {
+    setUnit(
+      detailOpen === "HistoryPoint" || detailOpen === "ThisMonthPoint"
+        ? "pt"
+        : "coin"
+    );
+  }, [detailOpen]);
 
   const handleOpenThisMonthPointDrawer = () => {
     const fetchData = async () => {
@@ -106,10 +115,10 @@ const Index = () => {
   };
 
   const handleConvertCoin = async (convertCoinAmount) => {
-      await UserService.convertCoin(convertCoinAmount);
-      const data = await UserService.fetchUserInfo();
-      setUserInfo(data);
-  }
+    await UserService.convertCoin(convertCoinAmount);
+    const data = await UserService.fetchUserInfo();
+    setUserInfo(data);
+  };
 
   const handleChangeConvertValue = (event) => {
     setConvertValue(event.target.value);
@@ -135,7 +144,7 @@ const Index = () => {
       <Grid container alignItems="center" sx={{ height: "100%" }}>
         <Grid item xs={2}>
           <ListItemAvatar>
-            <AccountCircleIcon fontSize="large" color="disabled"/>
+            <AccountCircleIcon fontSize="large" color="disabled" />
           </ListItemAvatar>
         </Grid>
         <Grid item xs={10}>
@@ -148,14 +157,17 @@ const Index = () => {
   );
 
   const PointCoinDetail = ({ detail }) => {
-  if (detail.length !== 0 && detailOpen !== "ConvertCoin") {
+    if (detail.length !== 0 && detailOpen !== "ConvertCoin") {
       return (
         <Box sx={{ maxWidth: 500 }}>
           <Typography>{detailTitle}</Typography>
 
           {detail?.map((item, index) => (
-            <>
-              <ListItem key={index} style={{ display: "flex", flexDirection: "column" }}>
+            <div key={index}>
+              <ListItem
+                
+                style={{ display: "flex", flexDirection: "column" }}
+              >
                 <Grid
                   container
                   alignItems="center"
@@ -195,64 +207,83 @@ const Index = () => {
                   </Grid>
                   <Grid item xs={4}>
                     <Typography color="text.primary" fontSize="20px">
-                      {userInfo?.point?.this_month}pt
+                      {item?.amount + unit}
                     </Typography>
                   </Grid>
                 </Grid>
               </ListItem>
               <Divider />
-            </>
+            </div>
           ))}
         </Box>
       );
-    } else if (detailOpen === "ConvertCoin"){
-      return (
-        <Box>
-        <Typography>{detailTitle}</Typography>
-        <Grid container sx={{paddingTop: 10}}>
-          <Grid item xs={5}>所有コイン：</Grid>
-          <Grid item xs={7}>{userInfo?.coin?.hold}coin</Grid>
-        </Grid>
-        <Grid container sx={{paddingTop: 5}}>
-          <Grid item xs={5}>換金額：</Grid>
-          <Grid item xs={7}>
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">選んでください</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={convertValue}
-                label="ConvertValue"
-                onChange={handleChangeConvertValue}
-              >
-                <MenuItem value={1000}>1000</MenuItem>
-                <MenuItem value={5000}>5000</MenuItem>
-                <MenuItem value={10000}>10000</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-        </Grid>
-        <Divider sx={{paddingTop: 3}}/>
-        <Grid container sx={{paddingTop: 3}}>
-          <Grid item xs={5}> 換金後の所有コイン：</Grid>
-          <Grid item xs={7}>{convertValue ? userInfo?.coin?.hold - convertValue : "???? "}coin</Grid>
-        </Grid>
-        <Button 
-          className={`font-bold mt-5 ${isConvertCoinDisabled ? "bg-gray-100" : "bg-teal-400 text-white hover:bg-teal-500"}`} 
-          disabled={isConvertCoinDisabled} 
-          onClick={isConvertCoinDisabled ? undefined : ()=>handleConvertCoin(convertValue)}
-        >
-          確定
-        </Button>
-        </Box>
-      )
-    }
-    else
-    {
+    } else if (detailOpen === "ConvertCoin") {
       return (
         <Box>
           <Typography>{detailTitle}</Typography>
-        <Box>データがありません。</Box>
+          <Grid container sx={{ paddingTop: 10 }}>
+            <Grid item xs={5}>
+              所有コイン：
+            </Grid>
+            <Grid item xs={7}>
+              {userInfo?.coin?.hold}coin
+            </Grid>
+          </Grid>
+          <Grid container sx={{ paddingTop: 5 }}>
+            <Grid item xs={5}>
+              換金額：
+            </Grid>
+            <Grid item xs={7}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  選んでください
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={convertValue}
+                  label="ConvertValue"
+                  onChange={handleChangeConvertValue}
+                >
+                  <MenuItem value={1000}>1000</MenuItem>
+                  <MenuItem value={5000}>5000</MenuItem>
+                  <MenuItem value={10000}>10000</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+          <Divider sx={{ paddingTop: 3 }} />
+          <Grid container sx={{ paddingTop: 3 }}>
+            <Grid item xs={5}>
+              {" "}
+              換金後の所有コイン：
+            </Grid>
+            <Grid item xs={7}>
+              {convertValue ? userInfo?.coin?.hold - convertValue : "???? "}coin
+            </Grid>
+          </Grid>
+          <Button
+            className={`font-bold mt-5 ${
+              isConvertCoinDisabled
+                ? "bg-gray-100"
+                : "bg-teal-400 text-white hover:bg-teal-500"
+            }`}
+            disabled={isConvertCoinDisabled}
+            onClick={
+              isConvertCoinDisabled
+                ? undefined
+                : () => handleConvertCoin(convertValue)
+            }
+          >
+            確定
+          </Button>
+        </Box>
+      );
+    } else {
+      return (
+        <Box>
+          <Typography>{detailTitle}</Typography>
+          <Box>データがありません。</Box>
         </Box>
       );
     }
@@ -260,8 +291,8 @@ const Index = () => {
 
   return (
     <>
-      <UserHeader/>
-      <MyPageHeader/>
+      <UserHeader />
+      <MyPageHeader />
       <Grid container>
         <Grid item sx={{ p: 4 }} xs={6}>
           <List sx={{ width: "100%", maxWidth: 500 }}>
@@ -285,7 +316,7 @@ const Index = () => {
               >
                 <Grid item xs={6}>
                   <Typography variant="body2" color="text.primary">
-                    今月の利用状況
+                    所持ポイント
                   </Typography>
                 </Grid>
                 <Grid item xs={4}>
@@ -302,7 +333,7 @@ const Index = () => {
                   </Button>
                 </Grid>
                 <Box color="text.secondary" fontSize="12px" marginLeft="auto">
-                  利用上限まで残り {5000 - userInfo?.point?.this_month}pt
+                  今月のご利用済みのポイント {5000 - userInfo?.point?.this_month}pt
                 </Box>
               </Grid>
               <Grid
@@ -366,7 +397,7 @@ const Index = () => {
                 </Grid>
                 <Grid item xs={4}>
                   <Typography color="text.primary" fontSize="20px">
-                    {userInfo?.coin?.hold}pt
+                    {userInfo?.coin?.hold}coin
                   </Typography>
                 </Grid>
                 <Grid item xs={2}>
@@ -390,7 +421,7 @@ const Index = () => {
                 </Grid>
                 <Grid item xs={4}>
                   <Typography color="text.primary" fontSize="20px">
-                    {userInfo?.coin?.deposit}pt
+                    {userInfo?.coin?.deposit}円
                   </Typography>
                 </Grid>
                 <Grid item xs={2}>
@@ -414,7 +445,7 @@ const Index = () => {
                 </Grid>
                 <Grid item xs={4}>
                   <Typography color="text.primary" fontSize="20px">
-                    {userInfo?.coin?.estimate}pt
+                    {userInfo?.coin?.estimate}coin
                   </Typography>
                 </Grid>
                 <Grid item xs={2}>
