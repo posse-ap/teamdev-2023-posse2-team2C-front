@@ -90,15 +90,6 @@ export default function Login() {
       });
   };
 
-  const logoutClick = () => {
-    axios
-      .get("http://localhost:80/api/logout", { withCredentials: true })
-      .then((response) => {
-        console.log(response.data);
-        alert(response.data.message + " が完了しました");
-      });
-  };
-
   return (
     <ThemeProvider theme={theme}>
       <SimpleUserHeader></SimpleUserHeader>
@@ -166,15 +157,6 @@ export default function Login() {
               className="bg-teal-400 hover:bg-teal-500"
             >
               check user
-            </Button>
-            <Button
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={logoutClick}
-              className="bg-teal-400 hover:bg-teal-500"
-            >
-              logout
             </Button>
             <Grid container>
               <Grid item xs>
