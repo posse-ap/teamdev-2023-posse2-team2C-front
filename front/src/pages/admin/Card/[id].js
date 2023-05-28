@@ -15,6 +15,7 @@ import {
   Link,
 } from "@mui/material";
 import CardForEdit from "@/components/admin/CardForEdit";
+import Header from "../../../components/admin/Header";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -114,6 +115,7 @@ const editForm = () => {
 
   return (
     <div className="App">
+      <Header></Header>
       <Container>
         <Box className="flex items-center">
           <Link href="/admin/Card">

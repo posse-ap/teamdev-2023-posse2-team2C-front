@@ -56,6 +56,8 @@ const ListingReview = () => {
   );
 } else {
   return (
+    <>
+    <Header></Header>
     <Box sx={{ p: 4 }}>
     <Typography variant="h4" component="h1" gutterBottom sx={{ px: 2 }}>
       出品審査待ち一覧
@@ -65,6 +67,7 @@ const ListingReview = () => {
     </Typography>
     
   </Box>
+  </>
   )
 }
 };
