@@ -33,11 +33,11 @@ const ThanksPage = () => {
       <Container>
         <Box className="mx-auto mt-20 w-3/4 text-center">
           <Typography variant="h4" component="h2" className="mb-5">
-            レンタルが完了しました。
+            返却が完了しました。
           </Typography>
-          <Typography variant="h6" component="h2" className="mb-5">
+          {/* <Typography variant="h6" component="h2" className="mb-5">
             出品者に通知を送信したので、これ以降は出品者の{item.owner}(@{item.slack_id})とやりとりしてください。
-          </Typography>
+          </Typography> */}
         </Box>
         <Box className="border border-gray-400 mx-auto mt-5 p-5 w-3/4 flex">
           <Box className="w-1/3">

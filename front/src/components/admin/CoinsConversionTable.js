@@ -78,8 +78,8 @@ const CoinsConversionTable = ({ data, headers, handleClick }) => {
                       </TableHead>
                       <tableBody>
                         <TableRow>
-                          {Object.values(rest).map((cell) => (
-                            <TableCell>{cell}</TableCell>
+                          {Object.values(rest).map((cell, index) => (
+                            <TableCell key={index}>{cell}</TableCell>
                           ))}
                         </TableRow>
                       </tableBody>

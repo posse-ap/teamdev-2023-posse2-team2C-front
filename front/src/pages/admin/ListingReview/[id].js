@@ -39,6 +39,7 @@ function ListingReviewItem() {
       })
       .then((response) => {
         console.log(response.data);
+        alert(response.data);
       })
       .catch(function (error) {
         console.log(error.message);
@@ -84,7 +85,7 @@ function ListingReviewItem() {
           justifyContent: "space-between",
         }}
       >
-        <Link href="/UserTop">
+        <Link href="/admin/ListingReview">
           <span>
             <ArrowBackIosIcon />
           </span>
