@@ -189,7 +189,7 @@ const MyPage = () => {
                       {detailOpen === "HistoryConvertCoin"
                         ? "注文ID"
                         : "注文名"}
-                      ：{item?.name}
+                      ：{item?.name ?? item?.id}
                     </Typography>
                   </Grid>
                   <Grid item xs={4}>
