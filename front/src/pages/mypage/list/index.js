@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Card from "@/components/Card.js";
+import Card from "@/components/mypage/Card.js";
 import UserTab from "@/components/UserTab.js";
 import UserHeader from "@/components/UserHeader.js";
 import SelectBox from "@/components/SelectBox.js";
