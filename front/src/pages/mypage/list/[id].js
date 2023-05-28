@@ -6,7 +6,6 @@ import Modal from "@/components/Modal.js";
 import UserHeader from "@/components/UserHeader-simple.js";
 import PropTypes from "prop-types";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import Header from "@/components/admin/Header";
 import {
   Box,
   Typography,
@@ -15,8 +14,7 @@ import {
   Button,
   Link,
 } from "@mui/material";
-import CardForEdit from "@/components/admin/CardForEdit";
-import Header from "../../../components/admin/Header";
+import Card from "@/components/Card.js";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -25,7 +23,6 @@ const editForm = () => {
   const [file, setFile] = useState(null);
   const [itemName, setItemName] = useState("");
   const [detail, setDetail] = useState("");
-  const [price, setPrice] = useState(null);
   const [item, setItem] = useState(false);
   const router = useRouter();
 
@@ -40,29 +37,12 @@ const editForm = () => {
         await setItem(data);
         await setItemName(data["name"]);
         await setDetail(data["detail"]);
-        await setPrice(data["price"]);
         console.log(data);
       } catch (error) {
         console.error(error);
       }
     };
-
-    axios
-      .get("http://localhost:80/api/role", { withCredentials: true })
-      .then((response) => {
-        if (response.data !== 2) {
-          alert("アクセス権限がありません。TOPページに戻ります。");
-          router.push("/UserTop");
-          return;
-        } else {
-          fetchData();
-        }
-      })
-      .catch(function (error) {
-        alert("ログイン情報がありません。");
-        router.push("/auth/login");
-        return;
-      });
+    fetchData();
   }, [router.query.id]);
 
   const changeFile = (file) => {
@@ -73,9 +53,6 @@ const editForm = () => {
   };
   const changeDetail = (e) => {
     setDetail(e.target.value);
-  };
-  const changePrice = (e) => {
-    setPrice(e.target.value);
   };
 
   const openModal = () => {
@@ -91,7 +68,6 @@ const editForm = () => {
       image: file,
       itemName: itemName,
       detail: detail,
-      price: price,
     };
     const params = new FormData();
     Object.keys(postParams).forEach(function (key) {
@@ -99,15 +75,14 @@ const editForm = () => {
     }, postParams);
     console.log(postParams);
     await axios
-      .post(`http://localhost:80/api/itemUpdate/${router.query.id}`, params, {
+      .post(`http://localhost:80/api/itemUpdateByUser/${router.query.id}`, params, {
         withCredentials: true,
         header: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       })
       .then((response) => {
         console.log(response.data);
-        alert(response.data);
       })
       .catch(function (error) {
         console.error(error);
@@ -116,10 +91,9 @@ const editForm = () => {
 
   return (
     <div className="App">
-      <Header></Header>
       <Container>
         <Box className="flex items-center">
-          <Link href="/admin/Card">
+          <Link href="/mypage/list">
             <span>
               <ArrowBackIosIcon />
             </span>
@@ -132,7 +106,11 @@ const editForm = () => {
         <Box className="flex justify-center mt-10">
           <Box className="w-6/12">
             現在のカード
-            {item ? <CardForEdit event={item} /> : null}
+            {item ? (
+              <Box className="w-2/3">
+                <Card event={item} />
+              </Box>
+            ) : null}
             <Typography variant="h6" component="h2" className="my-2">
               新しい画像（変更しない場合なしでも可）
             </Typography>
@@ -149,18 +127,6 @@ const editForm = () => {
               name="itemName"
               value={itemName}
               onChange={changeItemName}
-            />
-            <Typography variant="h6" component="h2" className="my-2">
-              ポイント(価格)
-            </Typography>
-            <TextField
-              // label="item name"
-              variant="filled"
-              className="w-full"
-              name="itemName"
-              value={price}
-              type="number"
-              onChange={changePrice}
             />
             <Box>
               <Typography variant="h6" component="h2" className="my-2">
@@ -185,13 +151,13 @@ const editForm = () => {
             className="rounded-md bg-teal-400 px-2 py-3 my-2 text-lg"
             onClick={openModal}
           >
-            更新する
+            確認画面へ
           </Button>
           <Modal
             open={isModalOpen}
             onClose={closeModal}
             onConfirm={handlePost}
-            title={"本当に更新しますか？"}
+            title={"更新しますか？"}
             cancelButtonText="入力に戻る"
             confirmButtonText="はい"
           />

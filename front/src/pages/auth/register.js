@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import SimpleUserHeader from "@/components/UserHeader-simple";
+import { useRouter } from "next/router";
 
 import axios from "axios";
 
@@ -41,6 +42,16 @@ export default function register() {
   const [slack_id, setSlack_id] = useState("");
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
+  const [error, setError] = useState(false);
+  const router = useRouter();
+
+  const validateEmail = () => {
+    if (email.endsWith("@anti-pattern.co.jp")) {
+      setError(false); // @anti-pattern.co.jpのアドレスならエラーを解除
+    } else {
+      setError(true); // それ以外のアドレスならエラーを表示
+    }
+  };
 
   const changeName = (e) => {
     setName(e.target.value);
@@ -75,6 +86,8 @@ export default function register() {
             })
             .then((response) => {
               console.log(response.data);
+              alert(response.data + "ログイン画面にて再度ログインしてください。");
+              router.push("http://localhost:3000/auth/login");
             });
         });
     } else {
@@ -133,6 +146,9 @@ export default function register() {
               autoComplete="email"
               autoFocus
               onChange={changeEmail}
+              onBlur={validateEmail}
+              error={error}
+              helperText={error ? "Invalid email address/ anti-patternのドメインを使用してください" : ""}
             />
             <TextField
               margin="normal"
