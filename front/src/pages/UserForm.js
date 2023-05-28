@@ -115,18 +115,6 @@ const UserForm = () => {
             </Box>
           </Box>
         </Box>
-        <Box className="mt-10">
-          <Typography variant="h6" component="h2">
-            管理者に伝えたいこと（任意）
-          </Typography>
-          <TextField
-            label=""
-            variant="filled"
-            className="w-full"
-            name="message"
-            onChange={changeMessage}
-          />
-        </Box>
         <Box className="flex justify-center">
           <Button
             variant="contained"
