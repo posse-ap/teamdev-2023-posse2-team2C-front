@@ -118,15 +118,15 @@ const ItemDetail = () => {
           </Box>
         </Box>
       </Container>
-      <Box sx={{ borderTop: "1px solid gray", marginTop: 4 }}>
-        {console.log(histories)}
+      <Box sx={{ borderTop: "1px solid gray", marginTop: 4, p: 4}}>
+        <Box><Typography fontSize={'large'}>貸出履歴</Typography></Box>
         {histories?.map((history) => (
-          <div key={history.name}>
-            <p>{history.name}</p>
-            <p>
+          <Box key={history.name} sx={{ display: 'flex' }}>
+            <Typography sx={{ paddingRight: 3 }}>{history.name}</Typography>
+            <Typography>
               {history.start} - {history.end}
-            </p>
-          </div>
+            </Typography>
+          </Box>
         ))}
       </Box>
     </div>
