@@ -10,25 +10,30 @@ import createEmotionCache from "../createEmotionCache";
 import "../styles/App.css";
 import axios from "./auth/axios";
 
+export const UserContext = React.createContext();
+
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
 export default function MyApp(props) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
-
+  const [user, setUser] = React.useState(null);
 
   const router = useRouter();
-  if( ! router.pathname.startsWith("/auth")){
-    axios
-      .get("http://localhost:80/api/user", { withCredentials: true })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        alert("ログイン情報がありません。")
-        window.location.href = "http://localhost:3000/auth/login";
-      });
-  }
+
+  React.useEffect(() => {
+    if (!router.pathname.startsWith("/auth")) {
+      axios
+        .get("http://localhost:80/api/user", { withCredentials: true })
+        .then((response) => {
+          console.log(response.data);
+          setUser(response.data);
+        })
+        .catch(function (error) {
+          window.location.href = "http://localhost:3000/auth/login";
+        });
+    }
+  }, [router.pathname]);
 
   return (
     <CacheProvider value={emotionCache}>
@@ -38,7 +43,10 @@ export default function MyApp(props) {
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <Component {...pageProps} />
+        {/* Provide the user state to all components */}
+        <UserContext.Provider value={user}>
+          <Component {...pageProps} />
+        </UserContext.Provider>
       </ThemeProvider>
     </CacheProvider>
   );

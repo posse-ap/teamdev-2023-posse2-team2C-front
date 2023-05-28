@@ -3,11 +3,13 @@ import { Box, Typography, Checkbox } from "@mui/material";
 import CoinsConversionTable from "@/components/admin/CoinsConversionTable";
 import { ConversionService } from "@/services/conversionService";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const CoinsConversion = () => {
   const [applications, setApplications] = useState([]);
+  const router = useRouter();
 
   const fetchData = async () => {
     await axios
