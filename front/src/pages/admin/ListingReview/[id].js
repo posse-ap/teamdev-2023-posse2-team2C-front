@@ -84,7 +84,7 @@ function ListingReviewItem() {
           justifyContent: "space-between",
         }}
       >
-        <Link href="/UserTop">
+        <Link href="/admin/ListingReview">
           <span>
             <ArrowBackIosIcon />
           </span>
