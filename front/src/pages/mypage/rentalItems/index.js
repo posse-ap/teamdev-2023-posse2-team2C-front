@@ -5,6 +5,8 @@ import UserHeader from "@/components/UserHeader.js";
 import MyPageHeader from "@/components/MyPageHeader.js";
 import SelectBox from "@/components/SelectBox.js";
 import PropTypes from "prop-types";
+import axios from "axios";
+import { UserContext } from "@/pages/_app.js";
 import {
   Box,
   Typography,
@@ -23,25 +25,25 @@ import {
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const UserTop = () => {
+  const user = React.useContext(UserContext);
   const [items, setItems] = useState([]);
-
   useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await fetch("http://localhost/api/mypage/rentals");
-          const data = await response.json();
-          if (data !== null) {
-            setItems(data);
-          } else {
-            setItems([]); // 空の配列をセットする
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost/api/mypage/rentals/all/${user.id}`,
+          {
+            withCredentials: true,
           }
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      };
+        );
+        setItems(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
-      fetchData();
-    }, []);
+    fetchData();
+  }, [user]);
 
   console.log(items);
   if (items.length !== 0) {
@@ -52,8 +54,8 @@ const UserTop = () => {
         <MyPageHeader />
         <Container>
           <Grid container spacing={10}>
-            {items?.map((item) => (
-              <Card key={item.id} event={item} />
+            {items?.map((item, index) => (
+              <Card key={index} event={item} />
             ))}
           </Grid>
         </Container>
