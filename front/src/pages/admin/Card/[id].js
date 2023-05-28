@@ -182,13 +182,13 @@ const editForm = () => {
             className="rounded-md bg-teal-400 px-2 py-3 my-2 text-lg"
             onClick={openModal}
           >
-            確認画面へ
+            更新する
           </Button>
           <Modal
             open={isModalOpen}
             onClose={closeModal}
             onConfirm={handlePost}
-            title={"更新しますか？"}
+            title={"本当に更新しますか？"}
             cancelButtonText="入力に戻る"
             confirmButtonText="はい"
           />
