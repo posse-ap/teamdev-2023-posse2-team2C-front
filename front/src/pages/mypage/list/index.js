@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import Card from "@/components/mypage/Card.js";
 import UserTab from "@/components/UserTab.js";
 import UserHeader from "@/components/UserHeader.js";
-import SelectBox from "@/components/SelectBox.js";
-import PropTypes from "prop-types";
+import MyPageHeader from "@/components/MyPageHeader.js";
 import {
   Box,
   Typography,
@@ -11,12 +10,6 @@ import {
   Switch,
   Container,
   Grid,
-  dividerClasses,
-  Checkbox,
-  Select,
-  FormControl,
-  MenuItem,
-  InputLabel,
 } from "@mui/material";
 import axios from "axios";
 
@@ -40,17 +33,38 @@ const cardList = () => {
   }, []);
 
   console.log(items);
-  return (
-    <div className="App">
-      <Container>
-        <Grid container spacing={10}>
-          {items?.map((item) => (
-            <Card event={item} />
-          ))}
-        </Grid>
-      </Container>
-    </div>
-  );
+  if (items.length !== 0) {
+    return (
+      <div className="App">
+        <UserHeader></UserHeader>
+        <MyPageHeader />
+        <Container>
+          <Grid container spacing={10}>
+            {items?.map((item) => (
+              <Card event={item} />
+            ))}
+          </Grid>
+        </Container>
+      </div>
+    );
+  } else {
+    return (
+      <div className="App">
+        <UserHeader></UserHeader>
+        <MyPageHeader />
+        <Container>
+          <Typography
+            variant="h6"
+            component="h1"
+            gutterBottom
+            sx={{ px: 2, my: 10 }}
+          >
+            現在出品中のアイテムはありません。
+          </Typography>
+        </Container>
+      </div>
+    );
+  }
 };
 
 export default cardList;
