@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Box, Typography, Checkbox } from "@mui/material";
 import CoinsConversionTable from "@/components/admin/CoinsConversionTable";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const CoinsConversion = () => {
   const [applications, setApplications] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
