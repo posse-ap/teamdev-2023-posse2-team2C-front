@@ -75,14 +75,19 @@ const editForm = () => {
     }, postParams);
     console.log(postParams);
     await axios
-      .post(`http://localhost:80/api/itemUpdateByUser/${router.query.id}`, params, {
-        withCredentials: true,
-        header: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
+      .post(
+        `http://localhost:80/api/itemUpdateByUser/${router.query.id}`,
+        params,
+        {
+          withCredentials: true,
+          header: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
       .then((response) => {
         console.log(response.data);
+        alert(response.data);
       })
       .catch(function (error) {
         console.error(error);
@@ -91,6 +96,7 @@ const editForm = () => {
 
   return (
     <div className="App">
+      <UserHeader></UserHeader>
       <Container>
         <Box className="flex items-center">
           <Link href="/mypage/list">
@@ -151,13 +157,13 @@ const editForm = () => {
             className="rounded-md bg-teal-400 px-2 py-3 my-2 text-lg"
             onClick={openModal}
           >
-            確認画面へ
+            更新する
           </Button>
           <Modal
             open={isModalOpen}
             onClose={closeModal}
             onConfirm={handlePost}
-            title={"更新しますか？"}
+            title={"本当に更新しますか？"}
             cancelButtonText="入力に戻る"
             confirmButtonText="はい"
           />
