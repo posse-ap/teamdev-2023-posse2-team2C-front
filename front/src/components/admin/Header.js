@@ -109,8 +109,8 @@ export default function Header() {
           <Grid item xs={2}>
             <MenuItem
               sx={{ color: "black", justifyContent: "center" }}
-              onClick={() => onClickNavigation("/admin/")} // todo 出品管理ページのURL貼る
-              selected={router.pathname === "/admin/"}
+              onClick={() => onClickNavigation("/admin/Card")} // todo 出品管理ページのURL貼る
+              selected={router.pathname === "/admin/Card"}
             >
               出品管理
             </MenuItem>

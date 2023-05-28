@@ -4,6 +4,7 @@ import UserTab from "@/components/UserTab.js";
 import UserHeader from "@/components/UserHeader.js";
 import SelectBox from "@/components/SelectBox.js";
 import PropTypes from "prop-types";
+import Header from "@/components/admin/Header";
 import {
   Box,
   Typography,
@@ -57,6 +58,7 @@ const cardList = () => {
   if (items.length !== 0  ) { 
   return (
     <div className="App">
+      <Header></Header>
       <Container>
         <Typography variant="h4" component="h1" gutterBottom sx={{ px: 2 }}>
           全カード
