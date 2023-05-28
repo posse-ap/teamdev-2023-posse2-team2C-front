@@ -64,6 +64,9 @@ export default function UserHeader() {
       <MenuItem onClick={() => onClickNavigation("/mypage/list")}>出品一覧</MenuItem>
       <MenuItem onClick={() => onClickNavigation("/mypage/rentalItems")}>レンタル品</MenuItem>
       <MenuItem onClick={() => onClickNavigation("/mypage/helpPage")}>ヘルプ</MenuItem>
+      {user?.role_id === 2 ? (
+        <MenuItem onClick={() => onClickNavigation("/admin/ListingReview")}>管理者ページへ</MenuItem>
+      ) : null }
       <MenuItem onClick={() => logoutClick()}>
         ログアウト</MenuItem>
     </Menu>

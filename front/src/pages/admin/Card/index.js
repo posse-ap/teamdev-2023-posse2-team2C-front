@@ -20,6 +20,7 @@ import {
   InputLabel,
 } from "@mui/material";
 import axios from "axios";
+import Header from "../../../components/admin/Header";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -54,7 +55,6 @@ const cardList = () => {
       });
   }, []);
 
-  console.log(items);
   if (items.length !== 0  ) { 
   return (
     <div className="App">
@@ -74,6 +74,7 @@ const cardList = () => {
 } else {
   return (
     <div className="App">
+      <Header></Header>
       <Container>
         <Typography variant="h4" component="h1" gutterBottom sx={{ px: 2 }}>
           全カード
