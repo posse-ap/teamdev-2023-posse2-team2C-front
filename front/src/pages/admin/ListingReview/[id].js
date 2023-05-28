@@ -39,6 +39,7 @@ function ListingReviewItem() {
       })
       .then((response) => {
         console.log(response.data);
+        alert(response.data);
       })
       .catch(function (error) {
         console.log(error.message);
