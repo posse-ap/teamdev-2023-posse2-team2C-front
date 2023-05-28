@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import UserTab from "../../../components/UserTab";
-import UserHeader from "../../../components/UserHeader.js";
-import FavoriteIcon from "../../../components/LikeButton.js";
+import UserTab from "@/components/UserTab";
+import UserHeader from "@/components/UserHeader.js";
+import FavoriteIcon from "@/components/LikeButton.js";
+import Modal from "@/components/Modal.js";
 import { useRouter } from "next/router";
 import { Box, Button, Typography, Container, Link } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import axios from "axios";
 
 const ItemDetail = () => {
   const [item, setItems] = useState([]);
@@ -15,7 +17,7 @@ const ItemDetail = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:80/api/rentals/${router.query.id}`
+          `http://localhost:80/api/mypage/rentals/${router.query.id}`
         );
         const data = await response.json();
         setItems(data);
@@ -28,8 +30,30 @@ const ItemDetail = () => {
     fetchData();
   }, []);
 
+  const storeReturnData = async (id) => {
+    await axios
+      .get(`http://localhost/api/mypage/rentals/return/${item.rental_id}'`, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response.data);
+      });
+    // const data = await response.json();
+    // return data;
+  };
+
   const histories = item.history;
-//   const payment_url = `/ItemPayment/${router.query.item_num}`;
+  //   const payment_url = `/ItemPayment/${router.query.item_num}`;
+
+  const [ModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="App">
@@ -98,9 +122,18 @@ const ItemDetail = () => {
           <Button
             // href={payment_url}
             className="rounded-md bg-teal-400 hover:bg-teal-500 px-2 py-3 mx-20 my-5 w-2/3 text-3xl text-white"
+            onClick={openModal}
           >
             返却する
           </Button>
+          <Modal
+            open={ModalOpen === true}
+            onConfirm={() => storeReturnData(item.rental_id)}
+            title={"出品者への返却は完了していますか？"}
+            cancelButtonText="いいえ"
+            confirmButtonText="はい"
+            onClose={closeModal}
+          />
           <Typography variant="h6" component="p">
             商品の説明
           </Typography>
