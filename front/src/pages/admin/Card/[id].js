@@ -14,7 +14,7 @@ import {
   Button,
   Link,
 } from "@mui/material";
-import Card from "@/components/admin/Card.js";
+import CardForEdit from "@/components/admin/CardForEdit";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -105,6 +105,7 @@ const editForm = () => {
       })
       .then((response) => {
         console.log(response.data);
+        alert(response.data);
       })
       .catch(function (error) {
         console.error(error);
@@ -115,7 +116,7 @@ const editForm = () => {
     <div className="App">
       <Container>
         <Box className="flex items-center">
-          <Link href="/UserTop">
+          <Link href="/admin/Card">
             <span>
               <ArrowBackIosIcon />
             </span>
@@ -128,7 +129,7 @@ const editForm = () => {
         <Box className="flex justify-center mt-10">
           <Box className="w-6/12">
             現在のカード
-            {item ? <Card event={item} /> : null}
+            {item ? <CardForEdit event={item} /> : null}
             <Typography variant="h6" component="h2" className="my-2">
               新しい画像（変更しない場合なしでも可）
             </Typography>
