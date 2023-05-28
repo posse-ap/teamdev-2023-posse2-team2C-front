@@ -58,8 +58,8 @@ const CoinsConversion = () => {
         <Typography variant="h4" component="h1" gutterBottom sx={{ px: 2 }}>
           換金申請一覧
         </Typography>
-        <Checkbox {...label} />
-        完了済みを非表示
+        {/* <Checkbox {...label} />
+        完了済みを非表示 */}
       </Box>
       <CoinsConversionTable data={applications} headers={headers} handleClick={handleClickConversionButton}/>
     </Box>
