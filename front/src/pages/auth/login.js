@@ -87,6 +87,7 @@ export default function Login() {
       .get("http://localhost:80/api/logout", { withCredentials: true })
       .then((response) => {
         console.log(response.data);
+        alert(response.data.message + ' が完了しました')
       });
   };
 
