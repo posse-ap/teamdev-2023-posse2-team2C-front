@@ -25,25 +25,22 @@ const UserTop = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-const fetchData = async () => {
-  try {
-    const response = await fetch(
-      `http://localhost/api/mypage/rentals`
-    );
-
-    if (response.ok) {
-      const data = await response.json();
-      setItems(data);
-    } else {
-      console.error("Error fetching data:", response.status);
-    }
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-};
-
-    fetchData();
-  }, []);
+      const fetchData = async () => {
+        try {
+          const response = await fetch('http://localhost/api/mypage/rentals');
+          const data = await response.json();
+          if (data !== null) {
+            setItems(data);
+          } else {
+            setItems([]); // 空の配列をセットする
+          }
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+  
+      fetchData();
+    }, []);
 
   console.log(items);
   return (
@@ -51,7 +48,6 @@ const fetchData = async () => {
       <UserHeader></UserHeader>
       <UserTab></UserTab>
       <Container>
-        <SelectBox></SelectBox>
         {items ? (
           <Grid container spacing={10}>
             {items?.map((item) => (
