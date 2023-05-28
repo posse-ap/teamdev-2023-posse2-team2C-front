@@ -316,7 +316,7 @@ const Index = () => {
               >
                 <Grid item xs={6}>
                   <Typography variant="body2" color="text.primary">
-                    今月の利用状況
+                    所持ポイント
                   </Typography>
                 </Grid>
                 <Grid item xs={4}>
@@ -333,7 +333,7 @@ const Index = () => {
                   </Button>
                 </Grid>
                 <Box color="text.secondary" fontSize="12px" marginLeft="auto">
-                  利用上限まで残り {5000 - userInfo?.point?.this_month}pt
+                  今月のご利用済みのポイント {5000 - userInfo?.point?.this_month}pt
                 </Box>
               </Grid>
               <Grid

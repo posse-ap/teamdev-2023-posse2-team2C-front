@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import ListingReviewTable from "@/components/admin/ListingReviewTable";
 import axios from "axios";
+import Header from "../../../components/admin/Header";
 
 const ListingReview = () => {
   const [requests, setRequests] = useState([]);
@@ -42,12 +43,15 @@ const ListingReview = () => {
   const headers = ["ユーザー名", "商品名", "申請日時", ""];
 
   return (
+    <>
+    <Header></Header>
     <Box sx={{ p: 4 }}>
       <Typography variant="h4" component="h1" gutterBottom sx={{ px: 2 }}>
         出品審査待ち一覧
       </Typography>
       <ListingReviewTable data={requests} headers={headers} />
     </Box>
+    </>
   );
 };
 

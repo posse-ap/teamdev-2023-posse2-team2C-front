@@ -5,6 +5,7 @@ import FavoriteIcon from "@/components/LikeButton.js";
 import { Box, Button, Typography, Container, Link } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import TextField from "@mui/material/TextField";
+import Header from "../../../components/admin/Header";
 
 function ListingReviewItem() {
   const [item, setItems] = useState([]);
@@ -79,6 +80,7 @@ function ListingReviewItem() {
 
   return (
     <div className="App">
+      <Header></Header>
       <Container
         sx={{
           display: "flex",

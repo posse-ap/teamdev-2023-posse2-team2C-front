@@ -4,6 +4,7 @@ import ManagementTable from "@/components/admin/UserManagementTable";
 import { UserService } from "@/services/userService";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Header from "../../components/admin/Header";
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
@@ -55,6 +56,8 @@ const UserManagement = () => {
   ];
 
     return (
+      <>
+      <Header></Header>
       <Box sx={{ p: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom sx={{ px: 2 }}>
           ユーザー一覧
@@ -66,6 +69,7 @@ const UserManagement = () => {
           handleClickRoleButton={handleClickRoleButton}
         />
       </Box>
+      </>
     );
 };
 
