@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Checkbox } from "@mui/material";
 import CoinsConversionTable from "@/components/admin/CoinsConversionTable";
+import { ConversionService } from "@/services/conversionService";
 import axios from "axios";
 import { useRouter } from "next/router";
 
@@ -10,60 +11,48 @@ const CoinsConversion = () => {
   const [applications, setApplications] = useState([]);
   const router = useRouter();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      //   const data = await fetchUsers();
-      //
-      // path名 /users の get
-      const data = [
-        {
-          id: 1,
-          is_converted: false,
-          name: "name1",
-          conversion_type: "アマギフ",
-          coin_amount: 100,
-          applied_at: "2023-04-04",
-        },
-        {
-          id: 2,
-          is_converted: false,
-          name: "name2",
-          conversion_type: "アマギフ",
-          coin_amount: 200,
-          applied_at: "2023-03-03",
-        },
-        {
-          id: 3,
-          is_converted: true,
-          name: "name3",
-          conversion_type: "アマギフ",
-          coin_amount: 300,
-          applied_at: "2023-02-02",
-        },
-      ];
-      setApplications(data);
-    };
+  const fetchData = async () => {
+    await axios
+      .get("http://localhost:80/api/show/conversion", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        const data = response.data;
+        setApplications(data);
+      })
+      .catch(function (error) {
+        console.log(error);
+        alert("データが取得できませんでした");
+      });
+  };
 
+  useEffect(() => {
 
     axios
-    .get("http://localhost:80/api/role", { withCredentials: true })
-    .then((response) => {
-      if (response.data !== 2) {
-        alert("アクセス権限がありません。TOPページに戻ります。");
-        router.push("/UserTop");
+      .get("http://localhost:80/api/role", { withCredentials: true })
+      .then((response) => {
+        if (response.data !== 2) {
+          alert("アクセス権限がありません。TOPページに戻ります。");
+          router.push("/UserTop");
+          return;
+        } else {
+          fetchData();
+        }
+      })
+      .catch(function (error) {
+        alert("ログイン情報がありません。");
+        router.push("/auth/login");
         return;
-      } else {
-        fetchData();
-      }
-    })
-    .catch(function (error) {
-      alert("ログイン情報がありません。");
-      router.push("/auth/login");
-      return;
-    });
+      });
   }, []);
 
   const headers = ["申請者", "換金方法", "coin", "申請日", "換金状況"];
+
+  const handleClickConversionButton = async (conversion_id) => {
+    console.log("clicked");
+    await ConversionService.convert(conversion_id);
+    await fetchData();
+  }
 
   return (
     <Box sx={{ p: 4 }}>
@@ -71,10 +60,10 @@ const CoinsConversion = () => {
         <Typography variant="h4" component="h1" gutterBottom sx={{ px: 2 }}>
           換金申請一覧
         </Typography>
-        <Checkbox {...label} />
-        完了済みを非表示
+        {/* <Checkbox {...label} />
+        完了済みを非表示 */}
       </Box>
-      <CoinsConversionTable data={applications} headers={headers} />
+      <CoinsConversionTable data={applications} headers={headers} handleClick={handleClickConversionButton}/>
     </Box>
   );
 };

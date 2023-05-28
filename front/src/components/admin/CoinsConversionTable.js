@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import Modal from "@/components/Modal";
 
-const CoinsConversionTable = ({ data, headers }) => {
+const CoinsConversionTable = ({ data, headers, handleClick }) => {
   const [modalOpen, setModalOpen] = useState(-1);
   const handleOpenModal = (id) => setModalOpen(id);
   const handleCloseModal = () => setModalOpen(-1);
@@ -57,6 +57,7 @@ const CoinsConversionTable = ({ data, headers }) => {
                 <Modal
                   open={modalOpen === id}
                   onClose={handleCloseModal}
+                  onConfirm={() => handleClick(id)}
                   title={
                     is_converted
                       ? "換金申請を未完了にしますか？"
@@ -77,8 +78,8 @@ const CoinsConversionTable = ({ data, headers }) => {
                       </TableHead>
                       <tableBody>
                         <TableRow>
-                          {Object.values(rest).map((cell) => (
-                            <TableCell>{cell}</TableCell>
+                          {Object.values(rest).map((cell, index) => (
+                            <TableCell key={index}>{cell}</TableCell>
                           ))}
                         </TableRow>
                       </tableBody>

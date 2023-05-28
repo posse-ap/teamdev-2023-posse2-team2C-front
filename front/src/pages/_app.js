@@ -20,18 +20,20 @@ export default function MyApp(props) {
   const [user, setUser] = React.useState(null);
 
   const router = useRouter();
-  if( ! router.pathname.startsWith("/auth")){
-    axios
-      .get("http://localhost:80/api/user", { withCredentials: true })
-      .then((response) => {
-        console.log(response.data);
-        setUser(response.data);
-      })
-      .catch(function (error) {
-        alert("ログイン情報がありません。")
-        window.location.href = "http://localhost:3000/auth/login";
-      });
-  }
+
+  React.useEffect(() => {
+    if (!router.pathname.startsWith("/auth")) {
+      axios
+        .get("http://localhost:80/api/user", { withCredentials: true })
+        .then((response) => {
+          console.log(response.data);
+          setUser(response.data);
+        })
+        .catch(function (error) {
+          window.location.href = "http://localhost:3000/auth/login";
+        });
+    }
+  }, [router.pathname]);
 
   return (
     <CacheProvider value={emotionCache}>
