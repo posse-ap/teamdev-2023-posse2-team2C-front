@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Checkbox } from "@mui/material";
 import CoinsConversionTable from "@/components/admin/CoinsConversionTable";
+import { ConversionService } from "@/services/conversionService";
 import axios from "axios";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
@@ -16,13 +17,10 @@ const CoinsConversion = () => {
       .then((response) => {
         const data = response.data;
         setApplications(data);
-        console.log(data);
       })
       .catch(function (error) {
         console.log(error);
         alert("データが取得できませんでした");
-        const data = [];
-        setApplications(data);
       });
   };
 
@@ -48,6 +46,12 @@ const CoinsConversion = () => {
 
   const headers = ["申請者", "換金方法", "coin", "申請日", "換金状況"];
 
+  const handleClickConversionButton = async (conversion_id) => {
+    console.log("clicked");
+    await ConversionService.convert(conversion_id);
+    await fetchData();
+  }
+
   return (
     <Box sx={{ p: 4 }}>
       <Box className="flex items-center">
@@ -57,7 +61,7 @@ const CoinsConversion = () => {
         <Checkbox {...label} />
         完了済みを非表示
       </Box>
-      <CoinsConversionTable data={applications} headers={headers} />
+      <CoinsConversionTable data={applications} headers={headers} handleClick={handleClickConversionButton}/>
     </Box>
   );
 };
