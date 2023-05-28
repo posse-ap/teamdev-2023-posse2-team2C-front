@@ -13,13 +13,13 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
-import { UserService } from "../services/userService";
-import UserHeader from "../components/UserHeader.js";
-import MyPageHeader from "../components/MyPageHeader.js";
+import { UserService } from "../../services/userService";
+import UserHeader from "../../components/UserHeader.js";
+import MyPageHeader from "../../components/MyPageHeader.js";
 import { useSpring, animated } from "@react-spring/web";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-const MyPage = () => {
+const index = () => {
   const [userInfo, setUserInfo] = useState();
   const [detail, setDetail] = useState([]);
   const [detailTitle, setDetailTitle] = useState();
@@ -448,4 +448,4 @@ const MyPage = () => {
   );
 };
 
-export default MyPage;
+export default index;

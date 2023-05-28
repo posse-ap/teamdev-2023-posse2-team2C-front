@@ -23,8 +23,8 @@ const MyPageHeader = () => {
           <Grid item>
             <MenuItem
               sx={{ color: "black" }}
-              onClick={() => onClickNavigation("/MyPage")}
-              selected={router.pathname === "/MyPage"}
+              onClick={() => onClickNavigation("/mypage")}
+              selected={router.pathname === "/mypage"}
             >
               アカウント情報
             </MenuItem>
@@ -32,8 +32,8 @@ const MyPageHeader = () => {
           <Grid item>
             <MenuItem
               sx={{ color: "black" }}
-              onClick={() => onClickNavigation("/MyPage/list")}
-              selected={router.pathname === "/MyPage/list"}
+              onClick={() => onClickNavigation("/mypage/helpPage")} // todo 出品ページのURL貼る
+              selected={router.pathname === "/mypage/list"}
             >
               出品
             </MenuItem>
@@ -41,8 +41,8 @@ const MyPageHeader = () => {
           <Grid item>
             <MenuItem
               sx={{ color: "black" }}
-              onClick={() => onClickNavigation("/MyPage/rentalItems")}
-              selected={router.pathname === "/MyPage/rentalItems"}
+              onClick={() => onClickNavigation("/mypage/rentalItems")}
+              selected={router.pathname === "/mypage/rentalItems"}
             >
               レンタル品
             </MenuItem>
@@ -50,8 +50,8 @@ const MyPageHeader = () => {
           <Grid item>
             <MenuItem
               sx={{ color: "black" }}
-              onClick={() => onClickNavigation("/MyPage/helpPage")}
-              selected={router.pathname === "/MyPage/helpPage"}
+              onClick={() => onClickNavigation("/mypage/helpPage")}
+              selected={router.pathname === "/mypage/helpPage"}
             >
               ヘルプ
             </MenuItem>
