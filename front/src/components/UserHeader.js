@@ -10,6 +10,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import Link  from 'next/link'
 import { useRouter } from "next/router";
 import { UserContext } from "../pages/_app";
+import { Button } from "@mui/material";
 
 
 export default function UserHeader() {
@@ -98,7 +99,7 @@ export default function UserHeader() {
             >
               <AccountCircle />
             </IconButton>
-            <Box className="rounded-md bg-teal-400">
+            <Button className="bg-teal-400 text-white font-bold hover:bg-teal-500" onClick={() => onClickNavigation("/UserForm")}>
               <Typography
                 variant="subtitle"
                 component="p"
@@ -106,7 +107,7 @@ export default function UserHeader() {
               >
                 出品
               </Typography>
-            </Box>
+            </Button>
           </Box>
         </Toolbar>
       </AppBar>
