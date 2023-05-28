@@ -40,7 +40,6 @@ const UserTop = () => {
     fetchData();
   }, []);
 
-  console.log(items);
   return (
     <div className="App">
       <UserHeader></UserHeader>

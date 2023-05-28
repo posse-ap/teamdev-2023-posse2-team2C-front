@@ -14,42 +14,42 @@ const MyPageHeader = () => {
   return (
     <AppBar position="static" className="bg-blue-50" elevation={0}>
       <Toolbar>
-        <Grid container alignItems="center" spacing={10}>
+        <Grid container alignItems="center">
           <Grid item xs={4}>
             <Typography color={"black"}>
               {user ? user.name : "Loading..."}さんのマイページ
             </Typography>
           </Grid>
-          <Grid item>
+          <Grid item xs={2}>
             <MenuItem
-              sx={{ color: "black" }}
+              sx={{ color: "black", justifyContent: "center" }}
               onClick={() => onClickNavigation("/mypage")}
               selected={router.pathname === "/mypage"}
             >
               アカウント情報
             </MenuItem>
           </Grid>
-          <Grid item>
+          <Grid item xs={2}>
             <MenuItem
-              sx={{ color: "black" }}
+              sx={{ color: "black", justifyContent: "center" }}
               onClick={() => onClickNavigation("/mypage/helpPage")} // todo 出品ページのURL貼る
               selected={router.pathname === "/mypage/list"}
             >
               出品
             </MenuItem>
           </Grid>
-          <Grid item>
+          <Grid item xs={2}>
             <MenuItem
-              sx={{ color: "black" }}
+              sx={{ color: "black" , justifyContent: "center" }}
               onClick={() => onClickNavigation("/mypage/rentalItems")}
               selected={router.pathname === "/mypage/rentalItems"}
             >
               レンタル品
             </MenuItem>
           </Grid>
-          <Grid item>
+          <Grid item xs={2}>
             <MenuItem
-              sx={{ color: "black" }}
+              sx={{ color: "black" , justifyContent: "center"}}
               onClick={() => onClickNavigation("/mypage/helpPage")}
               selected={router.pathname === "/mypage/helpPage"}
             >
