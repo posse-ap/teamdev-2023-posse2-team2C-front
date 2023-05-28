@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { UserService } from "../services/userService";
 import UserHeader from "../components/UserHeader.js";
+import MyPageHeader from "../components/MyPageHeader.js";
 import { useSpring, animated } from "@react-spring/web";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
@@ -260,6 +261,7 @@ const MyPage = () => {
   return (
     <>
       <UserHeader></UserHeader>
+      <MyPageHeader/>
       <Grid container>
         <Grid item sx={{ p: 4 }} xs={6}>
           <List sx={{ width: "100%", maxWidth: 500 }}>
