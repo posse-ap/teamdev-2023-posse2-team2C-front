@@ -7,27 +7,30 @@ import { useRouter } from "next/router";
 import { Box, Button, Typography, Container, Link } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import axios from "axios";
+import { UserContext } from "@/pages/_app.js";
 
 const ItemDetail = () => {
+  const user = React.useContext(UserContext);
   const [item, setItems] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:80/api/mypage/rentals/${router.query.id}`
+        const response = await axios.get(
+          `http://localhost:80/api/mypage/rentals/${router.query.id}`,
+          {
+            withCredentials: true,
+          }
         );
-        const data = await response.json();
-        setItems(data);
-        console.log(item);
+        setItems(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [user]);
 
   const storeReturnData = async (id) => {
     await axios
