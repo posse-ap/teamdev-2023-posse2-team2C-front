@@ -18,13 +18,14 @@ import UserHeader from "../components/UserHeader.js";
 import { useSpring, animated } from "@react-spring/web";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-const UserManagement = () => {
+const MyPage = () => {
   const [userInfo, setUserInfo] = useState();
   const [detail, setDetail] = useState([]);
   const [detailTitle, setDetailTitle] = useState();
   const [detailDateName, setDetailDateName] = useState();
   const [detailOpen, setDetailOpen] = useState(false);
   const [convertValue, setConvertValue] = useState();
+  const [isConvertCoinDisabled, setIsConvertCoinDisabled] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +35,14 @@ const UserManagement = () => {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (convertValue !== null && userInfo?.coin?.hold - convertValue >= 0) {
+      setIsConvertCoinDisabled(false);
+    } else {
+      setIsConvertCoinDisabled(true);
+    }
+  }, [convertValue, userInfo?.coin?.hold]);
 
   const handleOpenThisMonthPointDrawer = () => {
     const fetchData = async () => {
@@ -96,9 +105,9 @@ const UserManagement = () => {
   };
 
   const handleConvertCoin = async (convertCoinAmount) => {
-      await UserService.handleChangeConvertValue(convertCoinAmount);
-      const data = await UserService.fetchUsers();
-      setDetail(data);
+      await UserService.convertCoin(convertCoinAmount);
+      const data = await UserService.fetchUserInfo();
+      setUserInfo(data);
   }
 
   const handleChangeConvertValue = (event) => {
@@ -200,11 +209,11 @@ const UserManagement = () => {
         <Box>
         <Typography>{detailTitle}</Typography>
         <Grid container sx={{paddingTop: 10}}>
-          <Grid item xs={5}>所有coin：</Grid>
+          <Grid item xs={5}>所有コイン：</Grid>
           <Grid item xs={7}>{userInfo?.coin?.hold}coin</Grid>
         </Grid>
         <Grid container sx={{paddingTop: 5}}>
-          <Grid item xs={5}>換金額；</Grid>
+          <Grid item xs={5}>換金額：</Grid>
           <Grid item xs={7}>
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">選んでください</InputLabel>
@@ -224,10 +233,14 @@ const UserManagement = () => {
         </Grid>
         <Divider sx={{paddingTop: 3}}/>
         <Grid container sx={{paddingTop: 3}}>
-          <Grid item xs={5}> 換金後の所有coin：</Grid>
-          <Grid item xs={7}>50000coin</Grid>
+          <Grid item xs={5}> 換金後の所有コイン：</Grid>
+          <Grid item xs={7}>{convertValue ? userInfo?.coin?.hold - convertValue : "???? "}coin</Grid>
         </Grid>
-        <Button className="bg-teal-400 text-white font-bold hover:bg-teal-500 mt-5" onClick={()=>handleConvertCoin(convertValue)}>
+        <Button 
+          className={`font-bold mt-5 ${isConvertCoinDisabled ? "bg-gray-100" : "bg-teal-400 text-white hover:bg-teal-500"}`} 
+          disabled={isConvertCoinDisabled} 
+          onClick={isConvertCoinDisabled ? undefined : ()=>handleConvertCoin(convertValue)}
+        >
           確定
         </Button>
         </Box>
@@ -433,4 +446,4 @@ const UserManagement = () => {
   );
 };
 
-export default UserManagement;
+export default MyPage;

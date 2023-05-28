@@ -126,7 +126,7 @@ const UserService = {
     }
   },
 
-  handleChangeConvertValue: async function (amount) {
+  convertCoin: async function (amount) {
     await axios
       .post(
         `http://localhost/api/coin/convert`,
