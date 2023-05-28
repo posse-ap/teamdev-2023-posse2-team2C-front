@@ -6,6 +6,7 @@ import Modal from "@/components/Modal.js";
 import UserHeader from "@/components/UserHeader-simple.js";
 import PropTypes from "prop-types";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import Header from "@/components/admin/Header";
 import {
   Box,
   Typography,
@@ -114,6 +115,7 @@ const editForm = () => {
 
   return (
     <div className="App">
+      <Header></Header>
       <Container>
         <Box className="flex items-center">
           <Link href="/admin/Card">
