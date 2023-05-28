@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import SimpleUserHeader from "@/components/UserHeader-simple";
+import { useRouter } from "next/router";
 
 import axios from "axios";
 
@@ -42,6 +43,7 @@ export default function register() {
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
   const [error, setError] = useState(false);
+  const router = useRouter();
 
   const validateEmail = () => {
     if (email.endsWith("@anti-pattern.co.jp")) {
@@ -84,6 +86,8 @@ export default function register() {
             })
             .then((response) => {
               console.log(response.data);
+              alert(response.data + "ログイン画面にて再度ログインしてください。");
+              router.push("http://localhost:3000/auth/login");
             });
         });
     } else {
