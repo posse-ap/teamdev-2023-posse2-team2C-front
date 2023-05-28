@@ -8,30 +8,17 @@ const ListingReview = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      //   const data = await fetchUsers();
-      //
-      // path名 /users の get
-      const data = [
-        {
-          id: 1,
-          user_name: "name1",
-          item_name: "コイン君人形",
-          RequestDateTime: "2023/04/08 13:00",
-        },
-        {
-          id: 2,
-          user_name: "name2",
-          item_name: "コインくんフィギュア",
-          RequestDateTime: "2023/04/08 13:00",
-        },
-        {
-          id: 3,
-          user_name: "name3",
-          item_name: "コインくん",
-          RequestDateTime: "2023/04/08 13:00",
-        },
-      ];
-      setRequests(data);
+      await axios
+        .get("http://localhost:80/api/show/request", {
+          withCredentials: true,
+        })
+        .then((response) => {
+          const data = response.data;
+          setRequests(data);
+        })
+        .catch(function (error) {
+          console.log(error.message);
+        });
     };
 
     axios
